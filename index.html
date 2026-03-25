@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Pinch — Non-Brand PPC Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0d0b;
+    --bg2: #141310;
+    --bg3: #1c1a16;
+    --gold: #c9a96e;
+    --gold-light: #e8cfa0;
+    --gold-dim: #7a6540;
+    --cream: #f5f0e8;
+    --cream-dim: #a89c88;
+    --green: #5a8a6a;
+    --green-light: #7ab890;
+    --red: #8a4a4a;
+    --red-light: #c07070;
+    --teal: #4a7a8a;
+    --teal-light: #6ab0c0;
+    --border: rgba(201,169,110,0.18);
+    --border-dim: rgba(201,169,110,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 40px 48px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .header-left h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .header-left h1 span { font-style: italic; color: var(--gold); }
+  .header-left .subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .header-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-dim);
+    text-align: right;
+    letter-spacing: 0.1em;
+  }
+  .budget-badge {
+    background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05));
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+  .budget-badge .amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--gold-light);
+  }
+  .budget-badge .label { font-size: 10px; color: var(--cream-dim); letter-spacing: 0.12em; }
+
+  /* NAV TABS */
+  .nav {
+    display: flex;
+    padding: 0 48px;
+    border-bottom: 1px solid var(--border-dim);
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 16px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* MAIN */
+  .main { padding: 40px 48px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* OVERVIEW GRID */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    padding: 20px 24px;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--border); }
+  .stat-card .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cream-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .stat-card .value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--gold-light);
+  }
+  .stat-card .delta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    margin-top: 4px;
+  }
+  .delta.up { color: var(--green-light); }
+  .delta.down { color: var(--red-light); }
+  .delta.neutral { color: var(--cream-dim); }
+
+  /* INSIGHT BOX */
+  .insight-box {
+    background: linear-gradient(135deg, rgba(201,169,110,0.08), rgba(201,169,110,0.03));
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 20px 24px;
+    border-radius: 2px;
+    margin-bottom: 32px;
+  }
+  .insight-box h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+  .insight-box p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--cream-dim);
+  }
+  .insight-box ul {
+    margin-top: 8px;
+    padding-left: 16px;
+  }
+  .insight-box ul li {
+    font-size: 13px;
+    color: var(--cream-dim);
+    line-height: 1.7;
+  }
+  .insight-box ul li strong { color: var(--cream); font-weight: 500; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .section-title span { color: var(--gold); font-style: italic; }
+  .section-desc {
+    font-size: 13px;
+    color: var(--cream-dim);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* AD GROUP CARDS */
+  .adgroup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .adgroup-card {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .adgroup-card:hover { border-color: var(--border); transform: translateY(-2px); }
+  .adgroup-card.expanded { border-color: var(--gold-dim); }
+  .adgroup-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .adgroup-header-left { flex: 1; min-width: 0; }
+  .adgroup-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.03em;
+  }
+  .adgroup-intent {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cream-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .adgroup-alloc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--gold);
+    text-align: right;
+  }
+  .adgroup-alloc-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold-dim);
+    text-align: right;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .adgroup-bar-wrap {
+    padding: 0 24px 4px;
+  }
+  .adgroup-bar-bg {
+    height: 3px;
+    background: rgba(201,169,110,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .adgroup-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+  .adgroup-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid var(--border-dim);
+    margin-top: 8px;
+  }
+  .adgroup-card.expanded .adgroup-body { display: block; }
+
+  .expand-icon {
+    font-size: 18px;
+    color: var(--gold-dim);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .adgroup-card.expanded .expand-icon { transform: rotate(45deg); }
+
+  /* KEYWORDS TABLE */
+  .kw-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .kw-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--gold-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .kw-table td {
+    font-size: 12px;
+    color: var(--cream-dim);
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(201,169,110,0.04);
+  }
+  .kw-table tr:last-child td { border-bottom: none; }
+  .kw-table td:first-child { color: var(--cream); font-weight: 400; }
+  .match-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 1px;
+  }
+  .match-phrase { background: rgba(74,122,138,0.2); color: var(--teal-light); }
+  .match-broad { background: rgba(90,138,106,0.2); color: var(--green-light); }
+  .match-exact { background: rgba(201,169,110,0.15); color: var(--gold); }
+
+  /* AD COPY SECTION */
+  .adcopy-area { margin-top: 16px; }
+  .adcopy-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+  .headline-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .chip {
+    background: rgba(201,169,110,0.08);
+    border: 1px solid var(--border-dim);
+    padding: 4px 10px;
+    border-radius: 1px;
+    font-size: 11px;
+    color: var(--cream);
+  }
+  .chip.primary { border-color: var(--gold-dim); background: rgba(201,169,110,0.14); }
+  .desc-lines { }
+  .desc-line {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-radius: 1px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--cream-dim);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  .desc-line strong { color: var(--cream); font-weight: 500; }
+
+  /* BUDGET SECTION */
+  .budget-section { }
+  .budget-visual {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 2px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+  }
+  .budget-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 28px;
+    letter-spacing: 0.04em;
+  }
+  .budget-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .budget-row-label {
+    width: 200px;
+    flex-shrink: 0;
+  }
+  .budget-row-name {
+    font-size: 13px;
+    color: var(--cream);
+    font-weight: 400;
+  }
+  .budget-row-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--cream-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .budget-row-bar { flex: 1; }
+  .budget-bar-bg {
+    height: 8px;
+    background: rgba(201,169,110,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .budget-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s ease;
+  }
+  .bar-teal { background: linear-gradient(90deg, #2a6a7a, var(--teal-light)); }
+  .bar-green { background: linear-gradient(90deg, #3a6a4a, var(--green-light)); }
+  .bar-gold { background: linear-gradient(90deg, var(--gold-dim), var(--gold)); }
+  .bar-purple { background: linear-gradient(90deg, #5a3a7a, #9a70c0); }
+  .bar-rust { background: linear-gradient(90deg, #7a4a2a, #c08050); }
+
+  .budget-row-amount {
+    width: 120px;
+    flex-shrink: 0;
+    text-align: right;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold-light);
+  }
+  .budget-row-pct {
+    width: 50px;
+    flex-shrink: 0;
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cream-dim);
+  }
+  .budget-total-row {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .budget-total-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--cream-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .budget-total-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--gold-light);
+  }
+
+  .rationale-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .rationale-card {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 2px;
+    padding: 20px;
+  }
+  .rationale-card .icon {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .rationale-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+    letter-spacing: 0.03em;
+  }
+  .rationale-card p {
+    font-size: 12px;
+    color: var(--cream-dim);
+    line-height: 1.6;
+  }
+
+  /* AUDIT SECTION */
+  .audit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .audit-card {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 2px;
+    padding: 24px;
+  }
+  .audit-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    letter-spacing: 0.03em;
+  }
+  .audit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--cream-dim);
+    line-height: 1.6;
+  }
+  .audit-item .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .dot-red { background: var(--red-light); }
+  .dot-green { background: var(--green-light); }
+  .dot-gold { background: var(--gold); }
+  .audit-item strong { color: var(--cream); font-weight: 500; }
+
+  /* PRIORITY TABLE */
+  .priority-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .priority-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .priority-table td {
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--cream-dim);
+    border-bottom: 1px solid var(--border-dim);
+    vertical-align: top;
+  }
+  .priority-table td:first-child { color: var(--cream); font-weight: 400; }
+  .priority-table tr:last-child td { border-bottom: none; }
+
+  .priority-1 { color: var(--red-light) !important; font-family: 'DM Mono', monospace; font-size: 11px; }
+  .priority-2 { color: var(--gold) !important; font-family: 'DM Mono', monospace; font-size: 11px; }
+  .priority-3 { color: var(--green-light) !important; font-family: 'DM Mono', monospace; font-size: 11px; }
+
+  /* FOOTER NOTE */
+  .footer-note {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-dim);
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border-dim);
+    margin: 32px 0;
+  }
+
+  @media (max-width: 1100px) {
+    .overview-grid { grid-template-columns: repeat(2, 1fr); }
+    .adgroup-grid { grid-template-columns: 1fr; }
+    .rationale-grid { grid-template-columns: repeat(2, 1fr); }
+    .audit-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .header, .nav, .main { padding-left: 20px; padding-right: 20px; }
+    .overview-grid { grid-template-columns: 1fr 1fr; }
+    .budget-row-label { width: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <h1>The <span>Pinch</span></h1>
+    <div class="subtitle">Non-Brand PPC Strategy — Proposed Overhaul</div>
+  </div>
+  <div class="header-right">
+    <div>Charleston, SC · Luxury Boutique</div>
+    <div class="budget-badge">
+      <div class="budget-badge .label" style="font-size:10px;color:var(--cream-dim);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;">Monthly Non-Brand Budget</div>
+      <div class="amount">$4,000</div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <button class="nav-tab active" onclick="switchTab('overview')">Overview</button>
+  <button class="nav-tab" onclick="switchTab('adgroups')">Ad Groups & Copy</button>
+  <button class="nav-tab" onclick="switchTab('keywords')">Keywords</button>
+  <button class="nav-tab" onclick="switchTab('budget')">Budget Allocation</button>
+  <button class="nav-tab" onclick="switchTab('audit')">Current Audit</button>
+</nav>
+
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <div class="section active" id="section-overview">
+    <div class="overview-grid">
+      <div class="stat-card">
+        <div class="label">Current Non-Brand ROAS</div>
+        <div class="value">1.26x</div>
+        <div class="delta down">↓ from 2.40x prior period</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Non-Brand Revenue</div>
+        <div class="value">$197K</div>
+        <div class="delta up">↑ +36% vs prior</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Non-Brand Spend</div>
+        <div class="value">$32.2K</div>
+        <div class="delta down">↑ spend +17.4% — efficiency declining</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Impression Share</div>
+        <div class="value">65%</div>
+        <div class="delta neutral">Lost to rank: ~9% · Lost to budget: ~50%</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <h3>Strategic Assessment</h3>
+      <p>The Pinch's current non-brand campaign has strong volume but a significant efficiency problem. The "Search – Non-Brand Best/Charleston" ad group is the engine (324K impressions, $122K revenue, 1.22x ROAS) yet <strong>50% of IS is lost to budget</strong>, signaling budget constraint is actively limiting growth. Meanwhile, "Boutique (*)" ad group is essentially dead — 148 impressions, zero clicks, zero revenue — consuming structural overhead. The proposed overhaul focuses spend on high-intent, conversion-proven clusters and introduces Luxury/Experience segmentation to capture The Pinch's positioning premium.</p>
+    </div>
+
+    <div class="section-title">Proposed <span>Structure</span></div>
+    <div class="section-desc">Five tightly-themed ad groups replacing the current broad segmentation — each with distinct intent signals, tailored copy, and defined keyword clusters.</div>
+
+    <div class="adgroup-grid" id="overview-groups">
+      <div class="stat-card" style="padding:20px 24px;">
+        <div class="label">Ad Group 1</div>
+        <div class="value" style="font-size:20px;">Best Hotel Charleston</div>
+        <div class="delta neutral" style="margin-top:6px;">High volume · Proven converter · $1,400/mo</div>
+      </div>
+      <div class="stat-card" style="padding:20px 24px;">
+        <div class="label">Ad Group 2</div>
+        <div class="value" style="font-size:20px;">Luxury Hotel Charleston</div>
+        <div class="delta neutral" style="margin-top:6px;">Quality intent · 1.34x ROAS current · $800/mo</div>
+      </div>
+      <div class="stat-card" style="padding:20px 24px;">
+        <div class="label">Ad Group 3</div>
+        <div class="value" style="font-size:20px;">Downtown / Location</div>
+        <div class="delta neutral" style="margin-top:6px;">Geo-intent · Broad but targeted · $700/mo</div>
+      </div>
+      <div class="stat-card" style="padding:20px 24px;">
+        <div class="label">Ad Group 4</div>
+        <div class="value" style="font-size:20px;">Boutique Hotel</div>
+        <div class="delta neutral" style="margin-top:6px;">Brand-aligned intent · $600/mo</div>
+      </div>
+      <div class="stat-card" style="padding:20px 24px;">
+        <div class="label">Ad Group 5</div>
+        <div class="value" style="font-size:20px;">Experience / Occasion</div>
+        <div class="delta neutral" style="margin-top:6px;">High ADR intent · New segment · $500/mo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AD GROUPS & COPY -->
+  <div class="section" id="section-adgroups">
+    <div class="section-title">Ad Groups & <span>Copy</span></div>
+    <div class="section-desc">Click any ad group to expand full headline list, descriptions, and keyword rationale. Headlines are written for RSA rotation — 15 provided per group for Google to optimize.</div>
+
+    <div class="adgroup-grid" id="adgroup-cards">
+
+      <!-- AG1: Best Hotel -->
+      <div class="adgroup-card" onclick="toggleCard(this)">
+        <div class="adgroup-header">
+          <div class="adgroup-header-left">
+            <div class="adgroup-name">Best Hotel Charleston</div>
+            <div class="adgroup-intent">High-volume · proven converter · phrase match</div>
+          </div>
+          <div>
+            <div class="adgroup-alloc">$1,400</div>
+            <div class="adgroup-alloc-label">/ month · 35%</div>
+          </div>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="adgroup-bar-wrap">
+          <div class="adgroup-bar-bg"><div class="adgroup-bar-fill" style="width:35%"></div></div>
+        </div>
+        <div class="adgroup-body">
+          <div class="adcopy-area">
+            <div class="adcopy-label">Headlines (15 — RSA rotation)</div>
+            <div class="headline-chips">
+              <div class="chip primary">Best Hotel in Charleston SC</div>
+              <div class="chip primary">Top-Rated Charleston Boutique Hotel</div>
+              <div class="chip primary">The Pinch — Best in Charleston</div>
+              <div class="chip">Michelin Key Hotel & Michelin Restaurant</div>
+              <div class="chip">25 Bespoke Rooms & Suites</div>
+              <div class="chip">Book Direct — Exclusive Rates</div>
+              <div class="chip">Steps From King Street & Marion Square</div>
+              <div class="chip">Historic District · Modern Luxury</div>
+              <div class="chip">Complimentary Cancellation · Reserve Now</div>
+              <div class="chip">Complimentary 4th Night On Us</div>
+              <div class="chip">Reserve Your Stay at The Pinch</div>
+              <div class="chip">Home to Lowland — Michelin Listed</div>
+              <div class="chip">Your Gateway to Charleston</div>
+              <div class="chip">Where Lowcountry Meets Luxury</div>
+            </div>
+            <div class="adcopy-label">Descriptions (4)</div>
+            <div class="desc-lines">
+              <div class="desc-line"><strong>D1:</strong> Charleston's only Michelin Key hotel with a Michelin-listed restaurant on property. 25 individually curated rooms in the Historic District — and home to Lowland.</div>
+              <div class="desc-line"><strong>D2:</strong> The Pinch offers expansive suites across beautifully restored historic structures with private kitchens, living plants, and spaces from 375–1,100 sq ft. Book three nights, your fourth is complimentary.</div>
+              <div class="desc-line"><strong>D3:</strong> Beloved by discerning travelers who return season after season, The Pinch isn't just a place to stay — it's where your Charleston story begins.</div>
+              <div class="desc-line"><strong>D4:</strong> Book direct at ThePinch.com for exclusive rates, complimentary cancellation, and your fourth night on us. The finest Charleston experience starts here.</div>
+            </div>
+            <div class="adcopy-label" style="margin-top:14px;">Final URL</div>
+            <div class="desc-line" style="font-family:'DM Mono',monospace;font-size:11px;">thepinch.com/rooms &nbsp;|&nbsp; Display: thepinch.com/best-hotel-charleston</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AG2: Luxury -->
+      <div class="adgroup-card" onclick="toggleCard(this)">
+        <div class="adgroup-header">
+          <div class="adgroup-header-left">
+            <div class="adgroup-name">Luxury Hotel Charleston</div>
+            <div class="adgroup-intent">Quality signal · premium intent · phrase + broad</div>
+          </div>
+          <div>
+            <div class="adgroup-alloc">$800</div>
+            <div class="adgroup-alloc-label">/ month · 20%</div>
+          </div>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="adgroup-bar-wrap">
+          <div class="adgroup-bar-bg"><div class="adgroup-bar-fill" style="width:20%"></div></div>
+        </div>
+        <div class="adgroup-body">
+          <div class="adcopy-area">
+            <div class="adcopy-label">Headlines (15 — RSA rotation)</div>
+            <div class="headline-chips">
+              <div class="chip primary">Luxury Hotel in Charleston SC</div>
+              <div class="chip primary">A Touch of High Culture in Charleston</div>
+              <div class="chip primary">More Than a Pinch of Style</div>
+              <div class="chip">Michelin Key Hotel & Michelin Restaurant</div>
+              <div class="chip">Expansive Suites · Fine Interiors</div>
+              <div class="chip">Fully Outfitted Rooms & Suites</div>
+              <div class="chip">Book Direct for Exclusive Privileges</div>
+              <div class="chip">Fine Interiors with Private Kitchen</div>
+              <div class="chip">Short & Extended Stays Welcome</div>
+              <div class="chip">Explore the Peninsula & Beyond</div>
+              <div class="chip">Complimentary Cancellation · Reserve Now</div>
+              <div class="chip">The Pinch Luxury Hotel — Charleston</div>
+              <div class="chip">Historic Charm, Modern Comfort</div>
+              <div class="chip">Where Refinement Finds Its Address</div>
+              <div class="chip">Home to Lowland — Michelin Listed</div>
+            </div>
+            <div class="adcopy-label">Descriptions (4)</div>
+            <div class="desc-lines">
+              <div class="desc-line"><strong>D1:</strong> The Pinch is Charleston's only Michelin Key hotel with a Michelin-listed restaurant on property — a smart blend of historic ambiance, modern luxury, and home to Lowland.</div>
+              <div class="desc-line"><strong>D2:</strong> Relax in style with luxury boutique amenities — full kitchens, living plants, artfully designed rooms from 375 to 1,100 square feet. The bigger the space, the greater the comfort.</div>
+              <div class="desc-line"><strong>D3:</strong> Add a night on us — book three and your fourth night is at The Pinch's compliments. Enjoy an extra night to rendezvous in the heart of the city that has the world's heart.</div>
+              <div class="desc-line"><strong>D4:</strong> Fine interiors. Flex cancellations. Book direct at ThePinch.com/luxury-hotel for the best rates and exclusive offers unavailable anywhere else.</div>
+            </div>
+            <div class="adcopy-label" style="margin-top:14px;">Final URL</div>
+            <div class="desc-line" style="font-family:'DM Mono',monospace;font-size:11px;">thepinch.com/luxury-hotel &nbsp;|&nbsp; Display: thepinch.com/luxury-hotel</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AG3: Downtown / Location -->
+      <div class="adgroup-card" onclick="toggleCard(this)">
+        <div class="adgroup-header">
+          <div class="adgroup-header-left">
+            <div class="adgroup-name">Downtown / Location</div>
+            <div class="adgroup-intent">Geo-anchored · broad match w/ audience signals</div>
+          </div>
+          <div>
+            <div class="adgroup-alloc">$700</div>
+            <div class="adgroup-alloc-label">/ month · 17.5%</div>
+          </div>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="adgroup-bar-wrap">
+          <div class="adgroup-bar-bg"><div class="adgroup-bar-fill" style="width:17.5%"></div></div>
+        </div>
+        <div class="adgroup-body">
+          <div class="adcopy-area">
+            <div class="adcopy-label">Headlines (15 — RSA rotation)</div>
+            <div class="headline-chips">
+              <div class="chip primary">Hotel in Downtown Charleston SC</div>
+              <div class="chip primary">Steps From King Street & Rainbow Row</div>
+              <div class="chip primary">Historic District Hotel — The Pinch</div>
+              <div class="chip">Hotel Near Marion Square Charleston</div>
+              <div class="chip">Near TD Arena & Sottile Theater</div>
+              <div class="chip">Hotel Near Rainbow Row CHS</div>
+              <div class="chip">Walk to Charleston's Best Restaurants</div>
+              <div class="chip">Central Location · Easy Parking</div>
+              <div class="chip">Best Location on the Peninsula</div>
+              <div class="chip">Official Site · Best Available Rate</div>
+              <div class="chip">Check Availability Today</div>
+              <div class="chip">Book Now · Free Cancellation</div>
+              <div class="chip">Your Downtown Charleston Home Base</div>
+              <div class="chip">Explore King Street on Foot</div>
+              <div class="chip">25 Rooms · Heart of Charleston</div>
+            </div>
+            <div class="adcopy-label">Descriptions (4)</div>
+            <div class="desc-lines">
+              <div class="desc-line"><strong>D1:</strong> The Pinch sits at the intersection of history, culture, and cuisine in downtown Charleston. Walk to Rainbow Row, King Street shopping, and the city's best dining.</div>
+              <div class="desc-line"><strong>D2:</strong> A luxury boutique hotel steps from Marion Square, TD Arena, and the Sottile Theater — the perfect anchor for exploring everything the Historic Peninsula has to offer.</div>
+              <div class="desc-line"><strong>D3:</strong> Explore Downtown Charleston from the most enviable address on the Peninsula. The Pinch is your gateway to art galleries, waterfront parks, and world-class Lowcountry cuisine.</div>
+              <div class="desc-line"><strong>D4:</strong> Book direct at ThePinch.com/downtown for the best available rate. Complimentary cancellation, exquisitely appointed rooms, and the most coveted address in Charleston.</div>
+            </div>
+            <div class="adcopy-label" style="margin-top:14px;">Final URL</div>
+            <div class="desc-line" style="font-family:'DM Mono',monospace;font-size:11px;">thepinch.com/downtown &nbsp;|&nbsp; Display: thepinch.com/downtown</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AG4: Boutique -->
+      <div class="adgroup-card" onclick="toggleCard(this)">
+        <div class="adgroup-header">
+          <div class="adgroup-header-left">
+            <div class="adgroup-name">Boutique Hotel</div>
+            <div class="adgroup-intent">Brand-aligned intent · differentiation signal</div>
+          </div>
+          <div>
+            <div class="adgroup-alloc">$600</div>
+            <div class="adgroup-alloc-label">/ month · 15%</div>
+          </div>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="adgroup-bar-wrap">
+          <div class="adgroup-bar-bg"><div class="adgroup-bar-fill" style="width:15%"></div></div>
+        </div>
+        <div class="adgroup-body">
+          <div class="adcopy-area">
+            <div class="adcopy-label">Headlines (15 — RSA rotation)</div>
+            <div class="headline-chips">
+              <div class="chip primary">Boutique Hotel Charleston SC</div>
+              <div class="chip primary">The Pinch — 25 Bespoke Rooms</div>
+              <div class="chip primary">Expansive Amenities · Boutique Soul</div>
+              <div class="chip">In the Heart of the Historic District</div>
+              <div class="chip">Exquisitely Appointed Rooms & Suites</div>
+              <div class="chip">Reserve Ahead · Cancel Anytime</div>
+              <div class="chip">Fine Interiors with Private Kitchen</div>
+              <div class="chip">Exclusive Rates at ThePinch.com</div>
+              <div class="chip">Short & Extended Stays Welcome</div>
+              <div class="chip">Explore the Peninsula & Beyond</div>
+              <div class="chip">Boutique Hotel on King Street</div>
+              <div class="chip">Independently Owned · Personal Service</div>
+              <div class="chip">375–1,100 Sq Ft Rooms & Suites</div>
+              <div class="chip">A Pinch of Charleston in Every Room</div>
+              <div class="chip">Reserve Your Stay · Book Direct</div>
+            </div>
+            <div class="adcopy-label">Descriptions (4)</div>
+            <div class="desc-lines">
+              <div class="desc-line"><strong>D1:</strong> The Pinch Boutique Hotel offers 25 individually curated rooms in Charleston's Historic District. Rooms come with full kitchens, living plants, and spaces from 375 to 1,100 square feet.</div>
+              <div class="desc-line"><strong>D2:</strong> A luxury boutique hotel in the heart of Charleston — relax in style with luxury boutique amenities and a design philosophy that redefines what boutique can be.</div>
+              <div class="desc-line"><strong>D3:</strong> Independently owned and deeply rooted in Charleston's culture. The Pinch offers the personalized service and soul that big-box hotels simply can't replicate.</div>
+              <div class="desc-line"><strong>D4:</strong> Book direct at ThePinch.com/luxury-boutique-hotel for the best rates, flexible cancellations, and your fourth night complimentary.</div>
+            </div>
+            <div class="adcopy-label" style="margin-top:14px;">Final URL</div>
+            <div class="desc-line" style="font-family:'DM Mono',monospace;font-size:11px;">thepinch.com/luxury-boutique-hotel &nbsp;|&nbsp; Display: thepinch.com/luxury-boutique-hotel</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AG5: Experience -->
+      <div class="adgroup-card" onclick="toggleCard(this)" style="grid-column: 1 / -1;">
+        <div class="adgroup-header">
+          <div class="adgroup-header-left">
+            <div class="adgroup-name">Experience / Occasion</div>
+            <div class="adgroup-intent">New segment · high ADR intent · romantic stays, anniversaries, couples travel</div>
+          </div>
+          <div>
+            <div class="adgroup-alloc">$500</div>
+            <div class="adgroup-alloc-label">/ month · 12.5%</div>
+          </div>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="adgroup-bar-wrap">
+          <div class="adgroup-bar-bg"><div class="adgroup-bar-fill" style="width:12.5%"></div></div>
+        </div>
+        <div class="adgroup-body">
+          <div class="adcopy-area">
+            <div class="adcopy-label">Headlines (15 — RSA rotation)</div>
+            <div class="headline-chips">
+              <div class="chip primary">Romantic Hotel Charleston SC</div>
+              <div class="chip primary">Anniversary Stay in Charleston</div>
+              <div class="chip primary">Weekend Getaway · The Pinch</div>
+              <div class="chip">Honeymoon Hotels Charleston</div>
+              <div class="chip">Couples Retreat in the Historic District</div>
+              <div class="chip">Special Occasion Stay · Book Now</div>
+              <div class="chip">4th Night Complimentary · Romantic Escape</div>
+              <div class="chip">Celebrate at Charleston's Finest Boutique</div>
+              <div class="chip">Luxe Suites for Two · The Pinch</div>
+              <div class="chip">Make It a Night to Remember</div>
+              <div class="chip">Unforgettable Charleston Stay</div>
+              <div class="chip">Historic District · Romance & Culture</div>
+              <div class="chip">Plan Your Charleston Escape Today</div>
+              <div class="chip">Where Charleston Memories Are Made</div>
+              <div class="chip">Book a Suite · Stay 3, Get 4th Free</div>
+            </div>
+            <div class="adcopy-label">Descriptions (4)</div>
+            <div class="desc-lines">
+              <div class="desc-line"><strong>D1:</strong> Plan a romantic escape to Charleston's only Michelin Key hotel with a Michelin-listed restaurant on property. 25 bespoke rooms and suites in the Historic District — and home to Lowland.</div>
+              <div class="desc-line"><strong>D2:</strong> The Pinch is the perfect setting for anniversaries, honeymoons, and unforgettable weekend escapes. Expansive suites, private kitchens, and the kind of attentive service that makes every moment feel considered.</div>
+              <div class="desc-line"><strong>D3:</strong> Add a night on us. Book three nights and your fourth is on The Pinch — giving you more time to explore Rainbow Row, savour Lowcountry cuisine, and fall deeper in love with Charleston.</div>
+              <div class="desc-line"><strong>D4:</strong> Book direct at ThePinch.com for exclusive rates, flexible cancellations, and occasion packages. Your Charleston story starts here.</div>
+            </div>
+            <div class="adcopy-label" style="margin-top:14px;">Final URL</div>
+            <div class="desc-line" style="font-family:'DM Mono',monospace;font-size:11px;">thepinch.com/attractions &nbsp;|&nbsp; Display: thepinch.com/charleston-getaway</div>
+            <div class="adcopy-label" style="margin-top:14px;">Rationale</div>
+            <div class="desc-line">This is the most untapped segment. Occasion-based searchers ("romantic hotel," "anniversary hotel") carry higher ADR intent and lower price sensitivity — they are willing to pay premium for the right experience. The Pinch's positioning and 4th-night-free offer make it an ideal hook for this audience. This is a new segment not currently running and should be tested with performance max or targeted display support.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="section" id="section-keywords">
+    <div class="section-title">Proposed <span>Keywords</span></div>
+    <div class="section-desc">Rationalized keyword list by ad group. Eliminates zero-impression deadweight from current structure. Prioritizes proven revenue drivers and adds occasion-based expansion.</div>
+
+    <div class="insight-box">
+      <h3>Current Keyword Issues to Fix</h3>
+      <ul>
+        <li><strong>8 keywords with 0 impressions</strong> ("best hotel charleston," "best hotels downtown charleston," "best hotels in charleston," etc.) — all should be paused or replaced</li>
+        <li><strong>"boutique hotels charleston sc"</strong> — 0 impressions in Boutique (*) group; the entire group had 148 impressions -99.2% decline — needs restructuring</li>
+        <li><strong>Broad match keywords</strong> in Hotel group ("charleston sc hotels," "hotel charleston sc") getting 61K–4K impressions but 0 revenue attributed — review search term reports for negative keyword opportunities</li>
+        <li><strong>IS% Lost to Budget at 50%+</strong> on top performers — increasing bid efficiency will matter more than adding new keywords initially</li>
+      </ul>
+    </div>
+
+    <table class="priority-table">
+      <thead>
+        <tr>
+          <th>Ad Group</th>
+          <th>Keyword</th>
+          <th>Match Type</th>
+          <th>Rationale</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Best Hotel -->
+        <tr><td>Best Hotel CHS</td><td>best hotel charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>6,333 clicks · $71K revenue · proven #1 performer</td><td class="priority-3">✓ KEEP + SCALE</td></tr>
+        <tr><td>Best Hotel CHS</td><td>best hotels in charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>1,998 clicks · $6.7K revenue · solid volume</td><td class="priority-3">✓ KEEP</td></tr>
+        <tr><td>Best Hotel CHS</td><td>charleston sc best hotels</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>1,381 clicks · $7.7K revenue · good signal</td><td class="priority-3">✓ KEEP</td></tr>
+        <tr><td>Best Hotel CHS</td><td>best hotel in charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>323 clicks · $4K revenue · redundant but converting</td><td class="priority-2">⚡ CONSOLIDATE</td></tr>
+        <tr><td>Best Hotel CHS</td><td>top rated hotels charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — complements "best" cluster, captures review-driven searchers</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Best Hotel CHS</td><td>best hotel charleston</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>0 impressions currently — test without "sc" modifier</td><td class="priority-2">⚡ TEST</td></tr>
+        <tr><td>Best Hotel CHS</td><td>best hotels to stay in charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>279 clicks · $4.3K — keep, good intent</td><td class="priority-3">✓ KEEP</td></tr>
+        <!-- Luxury -->
+        <tr><td>Luxury</td><td>luxury hotels charleston sc</td><td><span class="match-badge match-broad">BROAD</span></td><td>1,181 clicks · $34.1K revenue · 1.66x ROAS — top luxury performer</td><td class="priority-3">✓ KEEP + SCALE</td></tr>
+        <tr><td>Luxury</td><td>luxury hotel charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — exact-intent phrase variation for higher precision</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Luxury</td><td>upscale hotel charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — synonym cluster captures adjacent luxury intent</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Luxury</td><td>fine hotels charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — quality signal aligned with The Pinch positioning</td><td class="priority-3">+ ADD NEW</td></tr>
+        <!-- Downtown -->
+        <tr><td>Downtown / Location</td><td>charleston sc hotels</td><td><span class="match-badge match-broad">BROAD</span></td><td>4,115 clicks · $57.7K revenue · highest volume keyword</td><td class="priority-3">✓ KEEP — add negatives</td></tr>
+        <tr><td>Downtown / Location</td><td>hotel charleston sc</td><td><span class="match-badge match-broad">BROAD</span></td><td>367 clicks · lower revenue — needs search term review</td><td class="priority-2">⚡ MONITOR</td></tr>
+        <tr><td>Downtown / Location</td><td>downtown charleston hotels</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — location-specific, high commercial intent</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Downtown / Location</td><td>hotels near king street charleston</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — specific geo signal, lower competition</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Downtown / Location</td><td>hotels near rainbow row charleston</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — The Pinch already uses in ad copy, match with keyword</td><td class="priority-3">+ ADD NEW</td></tr>
+        <!-- Boutique -->
+        <tr><td>Boutique</td><td>boutique hotels charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>Currently 0 impressions in Boutique (*) — restructure needed</td><td class="priority-2">⚡ RESTRUCTURE</td></tr>
+        <tr><td>Boutique</td><td>boutique hotel charleston</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — shorter match, broader catchment</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Boutique</td><td>small boutique hotels charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — differentiator language, aligns with 25-room story</td><td class="priority-3">+ ADD NEW</td></tr>
+        <!-- Experience -->
+        <tr><td>Experience / Occasion</td><td>romantic hotels charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — high ADR intent, low competition vs "best" cluster</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Experience / Occasion</td><td>romantic getaway charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — occasion-based, purchase-ready intent</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Experience / Occasion</td><td>anniversary hotels charleston</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — specific occasion, converts well in boutique category</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Experience / Occasion</td><td>couples hotels charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>NEW — broad occasion signal, complements romantic cluster</td><td class="priority-3">+ ADD NEW</td></tr>
+        <tr><td>Experience / Occasion</td><td>weekend getaway charleston sc</td><td><span class="match-badge match-broad">BROAD</span></td><td>NEW — higher funnel but captures vacation intent early</td><td class="priority-2">⚡ TEST (broad)</td></tr>
+        <!-- PAUSE -->
+        <tr><td>ALL GROUPS</td><td>best hotel in charleston (no SC)</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>0 impressions, 100% IS lost to budget — pause or test</td><td class="priority-1">✕ PAUSE</td></tr>
+        <tr><td>ALL GROUPS</td><td>best hotels downtown charleston</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>0 impressions — pause</td><td class="priority-1">✕ PAUSE</td></tr>
+        <tr><td>ALL GROUPS</td><td>top rated hotels in charleston sc</td><td><span class="match-badge match-phrase">PHRASE</span></td><td>38 clicks · $0 revenue — move to Best Hotel group, monitor</td><td class="priority-2">⚡ MOVE</td></tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+    <div class="insight-box">
+      <h3>Negative Keywords to Add</h3>
+      <ul>
+        <li><strong>Accommodation types:</strong> motel, hostel, airbnb, vrbo, vacation rental, resort (unless testing resort intent)</li>
+        <li><strong>Competitor intent:</strong> [specific competitor names] — build competitor exclusion list</li>
+        <li><strong>Price shoppers:</strong> cheap, cheapest, budget, affordable, discount, deal (unless running a promotion)</li>
+        <li><strong>Irrelevant geo:</strong> myrtle beach, hilton head, savannah, columbia SC</li>
+        <li><strong>OTA traffic:</strong> expedia, booking.com, hotels.com, priceline (if not already excluded)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BUDGET -->
+  <div class="section" id="section-budget">
+    <div class="section-title">Budget <span>Allocation</span></div>
+    <div class="section-desc">$4,000/month proposed distribution across 5 ad groups. Weighted toward proven revenue drivers with deliberate investment in new high-ADR segments.</div>
+
+    <div class="budget-visual">
+      <div class="budget-title">Monthly Allocation — $4,000 Non-Brand</div>
+
+      <div class="budget-row">
+        <div class="budget-row-label">
+          <div class="budget-row-name">Best Hotel Charleston</div>
+          <div class="budget-row-sub">Proven converter · scale priority</div>
+        </div>
+        <div class="budget-row-bar">
+          <div class="budget-bar-bg"><div class="budget-bar-fill bar-teal" style="width:35%"></div></div>
+        </div>
+        <div class="budget-row-amount">$1,400</div>
+        <div class="budget-row-pct">35%</div>
+      </div>
+
+      <div class="budget-row">
+        <div class="budget-row-label">
+          <div class="budget-row-name">Luxury Hotel</div>
+          <div class="budget-row-sub">Quality intent · 1.34x ROAS</div>
+        </div>
+        <div class="budget-row-bar">
+          <div class="budget-bar-bg"><div class="budget-bar-fill bar-gold" style="width:20%"></div></div>
+        </div>
+        <div class="budget-row-amount">$800</div>
+        <div class="budget-row-pct">20%</div>
+      </div>
+
+      <div class="budget-row">
+        <div class="budget-row-label">
+          <div class="budget-row-name">Downtown / Location</div>
+          <div class="budget-row-sub">High volume · geo intent</div>
+        </div>
+        <div class="budget-row-bar">
+          <div class="budget-bar-bg"><div class="budget-bar-fill bar-green" style="width:17.5%"></div></div>
+        </div>
+        <div class="budget-row-amount">$700</div>
+        <div class="budget-row-pct">17.5%</div>
+      </div>
+
+      <div class="budget-row">
+        <div class="budget-row-label">
+          <div class="budget-row-name">Boutique Hotel</div>
+          <div class="budget-row-sub">Brand alignment · differentiation</div>
+        </div>
+        <div class="budget-row-bar">
+          <div class="budget-bar-bg"><div class="budget-bar-fill bar-rust" style="width:15%"></div></div>
+        </div>
+        <div class="budget-row-amount">$600</div>
+        <div class="budget-row-pct">15%</div>
+      </div>
+
+      <div class="budget-row">
+        <div class="budget-row-label">
+          <div class="budget-row-name">Experience / Occasion</div>
+          <div class="budget-row-sub">NEW · high-ADR test segment</div>
+        </div>
+        <div class="budget-row-bar">
+          <div class="budget-bar-bg"><div class="budget-bar-fill bar-purple" style="width:12.5%"></div></div>
+        </div>
+        <div class="budget-row-amount">$500</div>
+        <div class="budget-row-pct">12.5%</div>
+      </div>
+
+      <div class="budget-total-row">
+        <div class="budget-total-label">Total Monthly Non-Brand</div>
+        <div class="budget-total-amount">$4,000</div>
+      </div>
+    </div>
+
+    <div class="rationale-grid">
+      <div class="rationale-card">
+        <div class="icon">📈</div>
+        <h4>Why 35% to Best Hotel</h4>
+        <p>The "best hotel charleston sc" keyword alone generated $71K in tracked revenue. This group is the top revenue engine. Budget constraint is already costing IS — this allocation addresses that directly while keeping CPA sustainable at ~$1,275 target.</p>
+      </div>
+      <div class="rationale-card">
+        <div class="icon">✨</div>
+        <h4>Why 20% to Luxury</h4>
+        <p>Luxury intent searchers have lower price sensitivity and higher ADR. Current luxury keywords show 1.34–1.66x ROAS with room to grow. Investing here defends The Pinch's premium positioning and aligns spend with the property's brand identity.</p>
+      </div>
+      <div class="rationale-card">
+        <div class="icon">📍</div>
+        <h4>Why 17.5% to Downtown</h4>
+        <p>"Charleston sc hotels" broad generated 4,115 clicks and $57K revenue. A well-structured geo/location group with tight negative keyword management turns this into a reliable volume driver. Needs search term report scrubbing monthly.</p>
+      </div>
+      <div class="rationale-card">
+        <div class="icon">🏨</div>
+        <h4>Why 15% to Boutique</h4>
+        <p>The Pinch IS a boutique hotel. Searchers using "boutique hotel" terms self-select as aligned prospects. This segment needs proper structure — the current Boutique (*) group is broken. Rebuild it cleanly with 3-4 tight keywords and strong RSA copy.</p>
+      </div>
+      <div class="rationale-card">
+        <div class="icon">💑</div>
+        <h4>Why 12.5% to Experience</h4>
+        <p>Occasion/romantic searchers are highest ADR. They're booking for anniversaries, honeymoons, and special weekends — and willing to pay a premium. The 4th-night-free offer is a perfect hook. Start with $500/mo as a test; scale if CPA looks good in 60 days.</p>
+      </div>
+      <div class="rationale-card">
+        <div class="icon">🎯</div>
+        <h4>60-Day Review Trigger</h4>
+        <p>Reallocate budget from any group running above $900 CPA or below 0.8x ROAS after 60 days of data. The Experience group should hit &gt;$0 revenue within 45 days or budget should shift to Best Hotel scaling. Review IS Lost to Budget monthly — if Best Hotel &gt;40%, increase its allocation first.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDIT -->
+  <div class="section" id="section-audit">
+    <div class="section-title">Current Campaign <span>Audit</span></div>
+    <div class="section-desc">An honest assessment of what's working, what's broken, and what's being left on the table in the current non-brand structure.</div>
+
+    <div class="audit-grid">
+      <div class="audit-card">
+        <h4>🔴 Issues to Fix</h4>
+        <div class="audit-item"><div class="dot dot-red"></div><div><strong>Boutique (*) is dead.</strong> 148 impressions, -99.2% decline, zero clicks, zero revenue. The group structure or bidding is broken. Pausing immediately and rebuilding is recommended.</div></div>
+        <div class="audit-item"><div class="dot dot-red"></div><div><strong>8 keywords with 0 impressions.</strong> These waste account structure overhead and dilute Quality Scores. Pause all immediately.</div></div>
+        <div class="audit-item"><div class="dot dot-red"></div><div><strong>50% IS lost to budget</strong> on the top-performing "Best/Charleston" group. Leaving revenue on the table by underfunding the best performer.</div></div>
+        <div class="audit-item"><div class="dot dot-red"></div><div><strong>Expanded Text Ads (ETAs) are paused</strong> but still in account structure (Hotel Best, Hotel Boutique, Hotel Luxury groups). Google deprecated ETAs — these should be fully removed and replaced with RSAs.</div></div>
+        <div class="audit-item"><div class="dot dot-red"></div><div><strong>ROAS declined from 2.40x to 1.26x</strong> overall despite revenue growing 36%. Spend grew faster than revenue — efficiency is eroding.</div></div>
+        <div class="audit-item"><div class="dot dot-red"></div><div><strong>CPA increased from $653 to $1,237</strong> — an 89% increase. This is the clearest signal that the current structure needs optimization.</div></div>
+      </div>
+      <div class="audit-card">
+        <h4>🟢 What's Working</h4>
+        <div class="audit-item"><div class="dot dot-green"></div><div><strong>"best hotel charleston sc"</strong> — the single best keyword. 6,333 clicks, $71K revenue, 1.79x ROAS, Quality Score 4 (room to improve copy relevance).</div></div>
+        <div class="audit-item"><div class="dot dot-green"></div><div><strong>Revenue trajectory is strong</strong> — $197K non-brand revenue, +36% YoY. The underlying demand is real; the issue is efficiency not volume.</div></div>
+        <div class="audit-item"><div class="dot dot-green"></div><div><strong>RSA copy strategy is correct</strong> — all active ad groups are already using Responsive Search Ads. Good foundation to build on.</div></div>
+        <div class="audit-item"><div class="dot dot-green"></div><div><strong>Luxury keywords are performing</strong> — "luxury hotels charleston sc" generated $34.1K revenue at 1.66x ROAS. This segment deserves more budget than current allocation.</div></div>
+        <div class="audit-item"><div class="dot dot-green"></div><div><strong>Landing page strategy is solid</strong> — URLs to thepinch.com/luxury-hotel, /downtown, /luxury-boutique-hotel show good landing page segmentation intent already in place.</div></div>
+        <div class="audit-item"><div class="dot dot-green"></div><div><strong>4th-night-free offer</strong> is a powerful hook already present in brand copy — should be more prominently featured in non-brand RSA headlines.</div></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="font-size:22px;">Implementation <span>Priorities</span></div>
+    <div style="margin-top:16px;">
+      <table class="priority-table">
+        <thead>
+          <tr>
+            <th>Priority</th>
+            <th>Action</th>
+            <th>Impact</th>
+            <th>Effort</th>
+            <th>Timeline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="priority-1">P1 — URGENT</span></td><td>Pause all 0-impression keywords & dead Boutique (*) group</td><td>Cleans account, recovers QS overhead</td><td>Low</td><td>This week</td></tr>
+          <tr><td><span class="priority-1">P1 — URGENT</span></td><td>Increase budget to Best Hotel group — from current to $1,400/mo</td><td>Captures IS lost to budget — direct revenue impact</td><td>Low</td><td>This week</td></tr>
+          <tr><td><span class="priority-2">P2 — HIGH</span></td><td>Rebuild Boutique group with new keywords & RSA copy from this plan</td><td>Recovers lost boutique-intent traffic</td><td>Medium</td><td>Week 2</td></tr>
+          <tr><td><span class="priority-2">P2 — HIGH</span></td><td>Build new Experience/Occasion ad group with 4 occasion keywords</td><td>Opens new high-ADR segment</td><td>Medium</td><td>Week 2</td></tr>
+          <tr><td><span class="priority-2">P2 — HIGH</span></td><td>Add comprehensive negative keyword list (OTAs, budget, competitor geo)</td><td>Improves ROAS by reducing wasted spend</td><td>Medium</td><td>Week 2</td></tr>
+          <tr><td><span class="priority-3">P3 — MEDIUM</span></td><td>Review search term reports for all broad match keywords</td><td>Identifies negative keyword opportunities & waste</td><td>Medium</td><td>Week 3</td></tr>
+          <tr><td><span class="priority-3">P3 — MEDIUM</span></td><td>Update all RSA copy with new headline sets from this plan</td><td>Improves CTR and Quality Score</td><td>Medium</td><td>Week 3–4</td></tr>
+          <tr><td><span class="priority-3">P3 — MEDIUM</span></td><td>Add ad extensions: sitelinks (Luxury Suite, Downtown Map, 4th Night Free), callouts, structured snippets</td><td>Increases CTR by 10–15%</td><td>Low</td><td>Week 4</td></tr>
+          <tr><td><span class="priority-3">P3 — MEDIUM</span></td><td>60-day performance review: rebalance budget based on CPA and ROAS by group</td><td>Ongoing efficiency optimization</td><td>Low</td><td>Day 60</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<div style="padding: 0 48px;">
+  <div class="footer-note">
+    The Pinch · Non-Brand PPC Strategy Dashboard · Prepared for Internal Review · $4,000/mo Budget · March 2026
+  </div>
+</div>
+
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelector(`#section-${id}`).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleCard(card) {
+    card.classList.toggle('expanded');
+  }
+</script>
+</body>
+</html>
