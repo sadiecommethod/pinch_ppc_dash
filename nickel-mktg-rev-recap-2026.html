@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nickel — March 2026 Monthly Performance Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN SYSTEM
+═══════════════════════════════════════ */
+:root {
+  --slate:    #2c3340;
+  --slate-mid:#3d4557;
+  --gold:     #b8932a;
+  --gold-lt:  #d4b05a;
+  --gold-bg:  rgba(184,147,42,0.08);
+  --paper:    #f5f2ed;
+  --paper-dk: #ede9e2;
+  --white:    #ffffff;
+  --green:    #2d7a5a;
+  --green-bg: rgba(45,122,90,0.08);
+  --red:      #a83232;
+  --red-bg:   rgba(168,50,50,0.08);
+  --amber:    #b86820;
+  --amber-bg: rgba(184,104,32,0.10);
+  --text:     #2c3340;
+  --text-mid: #5a6070;
+  --text-lt:  #8a90a0;
+  --border:   rgba(44,51,64,0.10);
+  --border-gold: rgba(184,147,42,0.30);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--paper);
+  color:var(--text);
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* ── NAV ── */
+.toc-nav{
+  background:var(--slate);
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;gap:0;
+  padding:0 40px;
+  overflow-x:auto;
+  border-bottom:2px solid var(--gold);
+}
+.toc-nav a{
+  color:rgba(255,255,255,0.55);
+  text-decoration:none;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  padding:14px 18px;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color 0.2s,border-color 0.2s;
+  margin-bottom:-2px;
+}
+.toc-nav a:hover{color:var(--gold-lt);border-bottom-color:var(--gold-lt)}
+
+/* ── HEADER ── */
+header{
+  background:var(--slate);
+  color:white;
+  padding:64px 60px 52px;
+  position:relative;
+  overflow:hidden;
+}
+header::after{
+  content:'';
+  position:absolute;bottom:0;right:0;
+  width:50%;height:100%;
+  background:linear-gradient(135deg,transparent 50%,rgba(184,147,42,0.05));
+  pointer-events:none;
+}
+.h-eyebrow{
+  font-size:10px;font-weight:500;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.h-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:58px;font-weight:300;line-height:1;
+  margin-bottom:10px;
+}
+.h-title em{font-style:italic;color:var(--gold-lt)}
+.h-sub{
+  font-size:13px;font-weight:300;
+  color:rgba(255,255,255,0.45);
+  letter-spacing:0.06em;margin-bottom:32px;
+}
+.h-pills{display:flex;gap:10px;flex-wrap:wrap}
+.h-pill{
+  background:rgba(184,147,42,0.15);
+  border:1px solid rgba(184,147,42,0.3);
+  border-radius:2px;padding:5px 14px;
+  font-size:11px;color:rgba(255,255,255,0.7);
+  letter-spacing:0.07em;
+}
+.h-pill.warn{background:rgba(168,50,50,0.2);border-color:rgba(168,50,50,0.4);color:rgba(255,180,180,0.9)}
+
+/* ── LAYOUT ── */
+main{max-width:1280px;margin:0 auto;padding:52px 40px 100px}
+.section{margin-bottom:64px}
+.section-anchor{scroll-margin-top:50px}
+
+.sec-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.sec-eyebrow::after{content:'';flex:1;height:1px;background:var(--border-gold)}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;font-weight:400;
+  color:var(--slate);margin-bottom:24px;line-height:1.2;
+}
+
+/* ── KPI CARDS ── */
+.kpi-grid{display:grid;gap:14px;margin-bottom:20px}
+.g5{grid-template-columns:repeat(5,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.kpi{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-top:3px solid var(--gold);
+  padding:22px 20px 18px;
+  border-radius:1px;
+}
+.kpi.dark{background:var(--slate);border-top-color:var(--gold)}
+.kpi.dark .kpi-lbl,.kpi.dark .kpi-note{color:rgba(255,255,255,0.45)}
+.kpi.dark .kpi-val{color:#fff}
+.kpi.dark .delta.up{color:#6ecfaa;background:rgba(110,207,170,0.12)}
+.kpi.dark .delta.down{color:#f09090;background:rgba(240,144,144,0.12)}
+.kpi-lbl{
+  font-size:10px;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-lt);margin-bottom:8px;
+}
+.kpi-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:300;line-height:1;
+  margin-bottom:8px;
+}
+.kpi-val.sm{font-size:28px}
+.kpi-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.delta{
+  font-size:11px;font-weight:500;
+  padding:2px 7px;border-radius:2px;
+}
+.delta.up{color:var(--green);background:var(--green-bg)}
+.delta.down{color:var(--red);background:var(--red-bg)}
+.delta.warn{color:var(--amber);background:var(--amber-bg)}
+.kpi-note{font-size:11px;color:var(--text-lt);margin-top:4px}
+.pill{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.07em;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;margin-top:6px;
+}
+.pill::before{content:'●';font-size:7px}
+.pill.warn{color:var(--red);background:var(--red-bg)}
+.pill.good{color:var(--green);background:var(--green-bg)}
+.pill.caution{color:var(--amber);background:var(--amber-bg)}
+.pill.neutral{color:var(--text-lt);background:rgba(138,144,160,0.12)}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin-bottom:20px}
+table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:1px}
+thead tr{background:var(--slate)}
+thead th{
+  color:rgba(255,255,255,0.55);
+  font-size:10px;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:11px 16px;text-align:right;white-space:nowrap;
+}
+thead th:first-child{text-align:left}
+tbody td{
+  padding:13px 16px;border-bottom:1px solid var(--border);
+  font-size:13.5px;text-align:right;vertical-align:top;
+}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even){background:rgba(245,242,237,0.5)}
+.tbl-total td{
+  background:var(--gold-bg)!important;
+  border-top:1px solid var(--border-gold);
+  font-weight:500;
+}
+.tbl-group td{
+  background:var(--paper-dk)!important;
+  font-size:11px;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--text-mid);
+  padding:9px 16px;
+}
+.tbl-sub td:first-child{padding-left:30px;color:var(--text-mid);font-weight:400;font-size:13px}
+.up{color:var(--green);font-weight:500}
+.dn{color:var(--red);font-weight:500}
+.wn{color:var(--amber);font-weight:500}
+.muted{color:var(--text-lt);font-size:12px}
+
+/* QS badge */
+.qs{display:inline-block;width:28px;height:28px;border-radius:50%;line-height:28px;text-align:center;font-size:12px;font-weight:500}
+.qs.g{background:#d4edda;color:#1a6630}
+.qs.go{background:#fff3cd;color:#856404}
+.qs.o{background:#ffe5cc;color:#8a3e00}
+.qs.r{background:#f8d7da;color:#7d1a1a}
+
+/* ── INSIGHT CARDS ── */
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.ic{
+  border-left:4px solid var(--gold);
+  background:var(--white);
+  padding:18px 20px;
+  border-radius:0 2px 2px 0;
+}
+.ic.alert{border-left-color:var(--red)}
+.ic.good{border-left-color:var(--green)}
+.ic.caution{border-left-color:var(--amber)}
+.ic-icon{font-size:18px;margin-bottom:6px}
+.ic-head{font-weight:500;font-size:13.5px;margin-bottom:6px}
+.ic-body{font-size:12.5px;color:var(--text-mid);line-height:1.65}
+.ic-body strong{color:var(--text);font-weight:500}
+
+/* ── PROSE ── */
+.prose{
+  font-size:15px;line-height:1.75;
+  color:var(--text-mid);max-width:820px;
+  margin-bottom:20px;
+}
+.prose strong{color:var(--text);font-weight:500}
+.prose + .prose{margin-top:0}
+
+/* ── CALLOUT BOX ── */
+.callout{
+  border:1px solid var(--border-gold);
+  border-left:4px solid var(--gold);
+  background:var(--gold-bg);
+  padding:20px 24px;
+  border-radius:0 2px 2px 0;
+  margin:20px 0;
+}
+.callout-lbl{
+  font-size:10px;font-weight:500;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;
+}
+.callout p{font-size:13.5px;color:var(--text-mid);line-height:1.65}
+.callout strong{color:var(--text)}
+
+/* ── DARK BOX ── */
+.dark-box{
+  background:var(--slate);
+  color:rgba(255,255,255,0.85);
+  padding:28px 32px;
+  border-radius:2px;
+  margin:20px 0;
+}
+.dark-box .db-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;
+  color:var(--gold-lt);margin-bottom:16px;
+}
+.dark-box p{font-size:13px;line-height:1.7;color:rgba(255,255,255,0.65);margin-bottom:12px}
+.dark-box .db-list{list-style:none;padding:0}
+.dark-box .db-list li{
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);
+  font-size:13px;color:rgba(255,255,255,0.75);
+  display:flex;gap:12px;align-items:flex-start;
+}
+.dark-box .db-list li:last-child{border-bottom:none}
+.dark-box .db-list li .num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;color:var(--gold);
+  line-height:1;flex-shrink:0;width:24px;
+}
+
+/* ── VENDOR ASSESSMENT ── */
+.vendor-claim{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:2px;
+  margin-bottom:16px;
+  overflow:hidden;
+}
+.vc-head{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 20px;
+  background:var(--paper-dk);
+  border-bottom:1px solid var(--border);
+}
+.vc-verdict{
+  font-size:11px;font-weight:500;
+  letter-spacing:0.08em;padding:4px 10px;
+  border-radius:2px;white-space:nowrap;flex-shrink:0;
+}
+.vc-verdict.accurate{background:var(--green-bg);color:var(--green)}
+.vc-verdict.partial{background:var(--gold-bg);color:var(--gold)}
+.vc-verdict.mislead{background:var(--red-bg);color:var(--red)}
+.vc-verdict.watch{background:var(--amber-bg);color:var(--amber)}
+.vc-claim{font-size:13px;font-weight:500;color:var(--text);font-style:italic}
+.vc-body{padding:16px 20px}
+.vc-body p{font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:8px}
+.vc-body p:last-child{margin-bottom:0}
+.vc-body strong{color:var(--text)}
+
+/* ── REALLOC TABLE ── */
+.realloc-tbl thead tr{background:rgba(255,255,255,0.1)}
+.realloc-tbl thead th{color:rgba(255,255,255,0.6)}
+.realloc-tbl tbody td{color:rgba(255,255,255,0.8);border-bottom-color:rgba(255,255,255,0.08);background:transparent!important}
+.realloc-tbl tbody tr:last-child td{border-bottom:none;color:var(--gold-lt);font-weight:500}
+
+/* ── PRIORITIES ── */
+.priority-item{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:2px;
+  padding:22px 24px;
+  margin-bottom:14px;
+  display:grid;
+  grid-template-columns:48px 1fr auto;
+  gap:0 20px;
+  align-items:start;
+}
+.p-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;font-weight:300;
+  color:var(--gold);line-height:1;
+  padding-top:2px;
+}
+.p-head{font-weight:500;font-size:15px;margin-bottom:8px}
+.p-body{font-size:13px;color:var(--text-mid);line-height:1.65}
+.p-class{
+  font-size:10px;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:2px;
+  white-space:nowrap;margin-top:4px;
+}
+.p-class.critical{background:var(--red-bg);color:var(--red)}
+.p-class.important{background:var(--amber-bg);color:var(--amber)}
+.p-class.strategic{background:var(--gold-bg);color:var(--gold)}
+
+/* ── BRIDGE ── */
+.bridge{display:flex;flex-direction:column;gap:0}
+.bridge-row{
+  display:flex;align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.bridge-row:last-child{border-bottom:none}
+.bridge-label{flex:1;font-size:13px;color:rgba(255,255,255,0.75)}
+.bridge-bar{height:6px;border-radius:3px;min-width:4px}
+.bridge-val{width:90px;text-align:right;font-size:13px;font-weight:500}
+.bridge-val.pos{color:#6ecfaa}
+.bridge-val.neg{color:#f09090}
+.bridge-val.tot{color:var(--gold-lt)}
+
+/* ── TWO/THREE COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+
+/* ── DIVIDER ── */
+hr.div{border:none;border-top:1px solid var(--border);margin:40px 0}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--slate);color:rgba(255,255,255,0.4);
+  text-align:center;padding:32px;
+  font-size:11px;letter-spacing:0.06em;
+}
+footer strong{color:var(--gold)}
+
+@media(max-width:960px){
+  .g5,.g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:1fr 1fr}
+  .two-col,.three-col,.insight-grid{grid-template-columns:1fr}
+  header{padding:40px 24px}
+  .h-title{font-size:40px}
+  main{padding:32px 20px}
+  .priority-item{grid-template-columns:40px 1fr}
+  .p-class{grid-column:2}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="toc-nav">
+  <a href="#exec">Executive Summary</a>
+  <a href="#revmgmt">Revenue Management</a>
+  <a href="#roomrev">Room Revenue</a>
+  <a href="#digital">Digital & Traffic</a>
+  <a href="#ppc">Paid Search</a>
+  <a href="#vendor">Vendor Assessment</a>
+  <a href="#priorities">Strategic Priorities</a>
+</nav>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="h-eyebrow">Monthly Performance Report — Confidential</div>
+  <div class="h-title">The <em>Nickel</em></div>
+  <div class="h-sub">Charleston, South Carolina &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; All data: Last Month vs. Prior Month</div>
+  <div class="h-pills">
+    <span class="h-pill">GM Report</span>
+    <span class="h-pill">Revenue Management</span>
+    <span class="h-pill">Marketing & Paid Search</span>
+    <span class="h-pill warn">PPC Vendor Grade: F (45/100)</span>
+    <span class="h-pill warn">Brand Spend 70% of Budget</span>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════
+     A. EXECUTIVE SUMMARY
+═══════════════════════════════════════════════════ -->
+<section class="section section-anchor" id="exec">
+  <div class="sec-eyebrow">A &nbsp;—&nbsp; Executive Summary</div>
+  <div class="sec-title">March 2026 at a Glance</div>
+
+  <div class="kpi-grid g5" style="margin-bottom:24px">
+    <div class="kpi dark">
+      <div class="kpi-lbl">Room Revenue (PMS)</div>
+      <div class="kpi-val sm">$614,530</div>
+      <div class="kpi-row"><span class="delta up">▲ +73% RevPAR</span></div>
+      <div class="kpi-note">1,203 room nights · $511 ADR</div>
+    </div>
+    <div class="kpi dark">
+      <div class="kpi-lbl">Marketing-Attributed (Web)</div>
+      <div class="kpi-val sm">$320,158</div>
+      <div class="kpi-row"><span class="delta warn">+0.2% vs Feb</span></div>
+      <div class="kpi-note">Booking engine view — not PMS total</div>
+    </div>
+    <div class="kpi dark">
+      <div class="kpi-lbl">YTD Revenue</div>
+      <div class="kpi-val sm">$1,021,016</div>
+      <div class="kpi-row"><span class="delta good">First full QTR</span></div>
+      <div class="kpi-note">Marketing vendor figure</div>
+    </div>
+    <div class="kpi dark">
+      <div class="kpi-lbl">PPC Spend</div>
+      <div class="kpi-val sm">$18,378</div>
+      <div class="kpi-row"><span class="delta warn">6.83x ROAS</span></div>
+      <div class="kpi-note">$19,540 incl. metasearch</div>
+    </div>
+    <div class="kpi dark">
+      <div class="kpi-lbl">RevPAR</div>
+      <div class="kpi-val sm">$395</div>
+      <div class="kpi-row"><span class="delta up">▲ +73.0%</span></div>
+      <div class="kpi-note">Comp Set: $446 · RGI: 88.6</div>
+    </div>
+  </div>
+
+  <p class="prose">
+    March 2026 delivered The Nickel's strongest RevPAR performance since opening, with room revenue reaching <strong>$614,530 across 1,203 room nights</strong> at an ADR of $511. RevPAR grew 73% versus the prior month to $395, driven by a combination of sharply higher rates — the property priced above the competitive set's $499 ADR at $513 — and improving occupancy. Weekend demand, particularly Friday and Saturday, remains the property's commercial engine: those two nights together account for <strong>42.3% of all room revenue</strong> at ADRs of $697 and $677 respectively. Direct-channel rate plans are also performing well, with the Pay Now & Save non-refundable rate representing 34.8% of room revenue and the Best Flexible Rate adding another 19.4%, signaling a healthy and growing direct booking mix.
+  </p>
+  <p class="prose">
+    Despite these gains, three issues demand immediate leadership attention. First, The Nickel's <strong>occupancy ran 12.3 points below the competitive set</strong> (77.0% vs. 89.3%), and the RevPAR Index of 88.6 is well below its 115 target — meaning the property is losing fair share on volume even while it wins on rate. Second, the <strong>paid search program carries structural risk</strong>: brand campaigns absorb 70% of PPC budget, new-guest revenue represents only 10% of PPC revenue against a 70% target, and the vendor has received a platform-generated grade of F with a score of 45/100. Third, the vendor's reported <strong>"total revenue" of $320,158 conflates booking-engine attribution with total hotel revenue</strong> — the two figures measure fundamentally different things, and this framing obscures how the property is actually performing. Each of these issues has a specific corrective action outlined in the Strategic Priorities section.
+  </p>
+
+  <div class="callout">
+    <div class="callout-lbl">⚠ Important Data Note</div>
+    <p>This report draws on two distinct revenue sources that should not be combined. The <strong>PMS (STR/segment drilldown) view shows $614,530 in total room revenue</strong> for March — this is the source of truth for hotel performance. The vendor's reported <strong>"Total Revenue" of $320,158</strong> reflects booking-engine-attributed web revenue only, not the hotel's full P&amp;L. Month-over-month comparisons are the primary lens for March 2026, as year-over-year data is not yet available on the Hotel Metrics platform.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     B. REVENUE MANAGEMENT
+═══════════════════════════════════════════════════ -->
+<section class="section section-anchor" id="revmgmt">
+  <div class="sec-eyebrow">B &nbsp;—&nbsp; Revenue Management</div>
+  <div class="sec-title">Competitive Position — STR Report</div>
+
+  <!-- STR KPIs -->
+  <div class="kpi-grid g5" style="margin-bottom:20px">
+    <div class="kpi">
+      <div class="kpi-lbl">Occupancy</div>
+      <div class="kpi-val">77.0%</div>
+      <div class="kpi-row"><span class="delta up">▲ +27.6%</span><span style="font-size:12px;color:var(--text-lt)">vs 60.3%</span></div>
+      <div class="kpi-note">Comp Set: 89.3%</div>
+      <div class="pill warn">−12.3 pts vs Comp Set</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">ADR</div>
+      <div class="kpi-val">$513</div>
+      <div class="kpi-row"><span class="delta up">▲ +35.5%</span><span style="font-size:12px;color:var(--text-lt)">vs $378</span></div>
+      <div class="kpi-note">Comp Set: $499 — above</div>
+      <div class="pill good">Pricing Above Comp Set</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">RevPAR</div>
+      <div class="kpi-val">$395</div>
+      <div class="kpi-row"><span class="delta up">▲ +73.0%</span><span style="font-size:12px;color:var(--text-lt)">vs $228</span></div>
+      <div class="kpi-note">Comp Set: $446</div>
+      <div class="pill caution">$51 Below Comp Set</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">RevPAR Index (RGI)</div>
+      <div class="kpi-val sm">88.6</div>
+      <div class="kpi-row"><span class="delta up">▲ +17.0</span><span style="font-size:12px;color:var(--text-lt)">Prior: 71.6</span></div>
+      <div class="kpi-note">Target ≥ 115 · ADR Index 102.8</div>
+      <div class="pill warn">Below Target</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Market Share</div>
+      <div class="kpi-val sm">86.2%</div>
+      <div class="kpi-row"><span class="delta up">▲ +11.2%</span><span style="font-size:12px;color:var(--text-lt)">vs 75.0%</span></div>
+      <div class="kpi-note">Rank #4 of 7 · Prior Rank #3</div>
+      <div class="pill warn">Rank Declined by 1</div>
+    </div>
+  </div>
+
+  <!-- STR Comp Table -->
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Metric</th>
+        <th>Nickel Current</th><th>Nickel Prior</th><th>Change</th>
+        <th>Comp Set Current</th><th>Comp Set Prior</th><th>Change</th>
+        <th>Nickel vs. Set</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Occupancy</td><td>77.0%</td><td>60.3%</td><td class="up">▲ +27.6%</td><td>89.3%</td><td>80.5%</td><td class="up">▲ +11.0%</td><td class="dn">−12.3 pts</td></tr>
+        <tr><td>ADR</td><td>$513</td><td>$378</td><td class="up">▲ +35.5%</td><td>$499</td><td>$396</td><td class="up">▲ +26.0%</td><td class="up">+$14 Premium</td></tr>
+        <tr><td>RevPAR</td><td>$395</td><td>$228</td><td class="up">▲ +73.0%</td><td>$446</td><td>$319</td><td class="up">▲ +39.8%</td><td class="dn">−$51 Gap</td></tr>
+        <tr><td>Occ Index</td><td colspan="2">86.2</td><td class="up">▲ +15.0%</td><td colspan="4"><span class="muted">Target ≥ 105 — Below Target</span></td></tr>
+        <tr><td>ADR Index</td><td colspan="2">102.8</td><td class="up">▲ +7.6%</td><td colspan="4"><span class="muted">Target ≥ 110 — Close to Target</span></td></tr>
+        <tr class="tbl-total"><td>RGI (RevPAR Index)</td><td colspan="2"><strong>88.6</strong></td><td class="up">▲ +17.0</td><td colspan="4"><span class="dn">Target ≥ 115 — 26.4 pts below target</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-lbl">📊 Trailing 12M Context</div>
+    <p>The trailing 12-month RevPAR Index stands at <strong>60.4, improving +23.7%</strong>. This tells a meaningful story: the hotel is on a clear upward trajectory, but has a long runway to reach competitive parity. The ADR Index at 102.8 (above 100) confirms rate competitiveness — the occupancy gap is the primary drag on RevPAR Index performance. Closing even half the 12.3-point occupancy gap would materially improve RGI.</p>
+  </div>
+
+  <div class="insight-grid">
+    <div class="ic good">
+      <div class="ic-icon">💰</div>
+      <div class="ic-head">Rate Strategy Outperforming Market</div>
+      <div class="ic-body">ADR of $513 is <strong>+$14 above the comp set average</strong> ($499), and the ADR Index of 102.8 confirms premium pricing is holding. The hotel priced into March demand effectively — particularly on weekends — without sacrificing ADR integrity. The Pay Now & Save structure at $593 ADR is driving strong direct revenue at a rate 16% above the overall house ADR.</div>
+    </div>
+    <div class="ic alert">
+      <div class="ic-icon">📉</div>
+      <div class="ic-head">Occupancy Gap Requires Demand Strategy</div>
+      <div class="ic-body">A <strong>12.3-point occupancy gap vs. the comp set</strong> is the single largest RevPAR drag. The comp set is at 89.3% occupancy — nearly sold out — while The Nickel ran at 77.0%. Midweek demand (Mon/Tue/Wed) averages only $418 ADR and 158 room nights per night vs. $687 on weekends. <strong>Action:</strong> Evaluate selective rate promotions, corporate and group prospecting, and OTA visibility improvements for Sun–Thu specifically.</div>
+    </div>
+    <div class="ic caution">
+      <div class="ic-icon">🏆</div>
+      <div class="ic-head">RevPAR Rank Declined Despite Strong Growth</div>
+      <div class="ic-body">The Nickel grew RevPAR by +73% but still slipped from <strong>rank #3 to #4 of 7</strong> in the competitive set. This reflects how strongly the market recovered overall: the comp set's +39.8% RevPAR growth, anchored by the 89.3% average occupancy, outpaced the property's volume gains. <strong>Action:</strong> Request a detailed STR custom report showing each competitor's individual metrics to identify which properties are driving high occupancy at lower rates vs. balanced rate-and-volume positions.</div>
+    </div>
+    <div class="ic good">
+      <div class="ic-icon">📈</div>
+      <div class="ic-head">Trajectory is Positive — Index Recovering</div>
+      <div class="ic-body">RGI improved from 71.6 to 88.6 (+17 points) and the trailing 12M index of 60.4 (+23.7%) confirms a consistent recovery arc. The ADR Index above 100 is a meaningful signal that rate strategy is sound. <strong>The occupancy gap is a demand and distribution problem, not a pricing problem</strong> — the hotel should maintain rate discipline while investing in occupancy-building channels like metasearch expansion, non-brand PPC, and OTA visibility.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     C. ROOM REVENUE DETAIL
+═══════════════════════════════════════════════════ -->
+<section class="section section-anchor" id="roomrev">
+  <div class="sec-eyebrow">C &nbsp;—&nbsp; Room Revenue Detail</div>
+  <div class="sec-title">Segment, Room Type &amp; Day-of-Week Analysis</div>
+
+  <!-- Day of Week -->
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:14px">Day-of-Week Performance</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Day</th><th>Room Nights</th><th>ADR</th><th>Revenue</th><th>Rev Mix %</th><th>Notes</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Friday</td><td>185</td><td>$697</td><td>$128,880</td><td>21.0%</td><td class="up">Weekend Peak</td></tr>
+        <tr><td>Saturday</td><td>193</td><td>$677</td><td>$130,720</td><td>21.3%</td><td class="up">Weekend Peak</td></tr>
+        <tr><td>Thursday</td><td>172</td><td>$532</td><td>$91,445</td><td>14.9%</td><td class="muted">Shoulder night — strong</td></tr>
+        <tr><td>Tuesday</td><td>170</td><td>$436</td><td>$74,112</td><td>12.1%</td><td class="muted">Midweek</td></tr>
+        <tr><td>Sunday</td><td>179</td><td>$363</td><td>$65,017</td><td>10.6%</td><td class="dn">Rate compression</td></tr>
+        <tr><td>Wednesday</td><td>151</td><td>$430</td><td>$64,973</td><td>10.6%</td><td class="dn">Lowest volume</td></tr>
+        <tr><td>Monday</td><td>153</td><td>$388</td><td>$59,383</td><td>9.7%</td><td class="dn">Lowest ADR</td></tr>
+        <tr class="tbl-total"><td><strong>Totals</strong></td><td><strong>1,203</strong></td><td><strong>$511</strong></td><td><strong>$614,530</strong></td><td><strong>100%</strong></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-lbl">Weekend vs. Midweek Pattern</div>
+    <p><strong>Friday and Saturday combine for 42.3% of all room revenue</strong> at ADRs of $677–$697. Thursday is a strong shoulder at $532 ADR, suggesting a Thur–Sat leisure travel pattern anchors the business. Sunday drops to $363 ADR — a $334 rate spread vs. Friday, indicating weekend demand trails off sharply after checkout. <strong>The Monday–Wednesday window (revenue mix: 32.4%) is the clearest opportunity:</strong> targeted corporate prospecting, group contracting, or package incentives could materially lift the midweek floor. At current midweek volume, just 10 additional room nights at $400 ADR per night would generate ~$120K in incremental annual revenue.</p>
+  </div>
+
+  <!-- Room Type -->
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin:28px 0 14px">Room Type Performance</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Room Type</th><th>Nights</th><th>ADR</th><th>Revenue</th><th>Rev Mix</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>King Balcony</td><td>464</td><td>$476</td><td>$221,049</td><td class="up"><strong>36.0%</strong></td></tr>
+        <tr><td>King</td><td>440</td><td>$423</td><td>$186,302</td><td>30.3%</td></tr>
+        <tr><td>One Bedroom Suite</td><td>97</td><td>$607</td><td>$58,891</td><td>9.6%</td></tr>
+        <tr><td>King Flat</td><td>47</td><td>$697</td><td>$32,765</td><td>5.3%</td></tr>
+        <tr><td>One Bedroom Balcony Suite</td><td>44</td><td>$714</td><td>$31,437</td><td>5.1%</td></tr>
+        <tr><td>Three Bedroom Penthouse</td><td>21</td><td>$1,151</td><td>$24,174</td><td>3.9%</td></tr>
+        <tr><td>Two Bedroom Penthouse</td><td>21</td><td>$1,094</td><td>$22,964</td><td>3.7%</td></tr>
+        <tr><td>Balcony Loft</td><td>28</td><td>$606</td><td>$16,968</td><td>2.8%</td></tr>
+        <tr><td>Courtyard Loft</td><td>16</td><td>$589</td><td>$9,420</td><td>1.5%</td></tr>
+        <tr><td>King Accessible</td><td>20</td><td>$373</td><td>$7,456</td><td>1.2%</td></tr>
+        <tr><td>One Bedroom Accessible Suite</td><td>5</td><td>$621</td><td>$3,103</td><td>0.5%</td></tr>
+        <tr class="tbl-total"><td><strong>Totals</strong></td><td><strong>1,203</strong></td><td><strong>$511</strong></td><td><strong>$614,529</strong></td><td><strong>100%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight-grid">
+    <div class="ic good">
+      <div class="ic-icon">🛏️</div>
+      <div class="ic-head">King Balcony Dominates Revenue at 36%</div>
+      <div class="ic-body">With 464 room nights and $221,049 in revenue, the King Balcony is the workhorse. However, its <strong>$476 ADR sits $38 below the standard King Flat at $697</strong> and well below the suite tiers. The balcony category's volume strength is valuable, but there may be room to test rate on this inventory — particularly for weekend bookings — given the ADR gap versus comparable enhanced categories.</div>
+    </div>
+    <div class="ic caution">
+      <div class="ic-icon">🏙️</div>
+      <div class="ic-head">Premium Inventory (Penthouses, Suites) Remains Small</div>
+      <div class="ic-body">The Three and Two Bedroom Penthouses together produced only 42 room nights — 3.5% of total volume — despite ADRs of $1,094–$1,151. One Bedroom Balcony Suites at $714 ADR ran only 44 nights. <strong>If any of these categories show restriction exits in the booking engine data, it's a revenue integrity signal</strong> — premium rooms should clear before lower tiers. Consider whether minimum stay restrictions are appropriately calibrated for these categories on peak weekend dates.</div>
+    </div>
+  </div>
+
+  <!-- Rate Plan Breakdown -->
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin:28px 0 14px">Rate Plan Channel Mix</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Rate Plan / Channel</th><th>Nights</th><th>ADR</th><th>Revenue</th><th>Rev Mix</th></tr></thead>
+      <tbody>
+        <tr class="tbl-group"><td colspan="5">Direct Channels</td></tr>
+        <tr class="tbl-sub"><td>Pay Now &amp; Save (Non-Refundable Direct)</td><td>360</td><td>$594</td><td>$213,667</td><td class="up">34.8%</td></tr>
+        <tr class="tbl-sub"><td>Best Flexible Rate (Direct)</td><td>187</td><td>$637</td><td>$119,039</td><td>19.4%</td></tr>
+        <tr class="tbl-sub"><td>Insider Best Flexible / Unlock Even More</td><td>~162</td><td>~$453</td><td>~$73,679</td><td>~12.0%</td></tr>
+        <tr class="tbl-group"><td colspan="5">OTA / Third-Party</td></tr>
+        <tr class="tbl-sub"><td>Expedia NREF Daily (Collect)</td><td>158</td><td>$422</td><td>$66,620</td><td>10.8%</td></tr>
+        <tr class="tbl-sub"><td>Booking.com NREF Daily</td><td>41</td><td>$455</td><td>$18,648</td><td>3.0%</td></tr>
+        <tr class="tbl-sub"><td>OTA Flexible (TROTAFLEX — various)</td><td>92</td><td>$511</td><td>$47,056</td><td>7.7%</td></tr>
+        <tr class="tbl-sub"><td>OTA Non-Refundable (Booking.com Weekly)</td><td>7</td><td>$612</td><td>$4,285</td><td>0.7%</td></tr>
+        <tr class="tbl-group"><td colspan="5">Loyalty / Other</td></tr>
+        <tr class="tbl-sub"><td>TRLOYALTY (Insider Pay Now, Stay Longer)</td><td>12</td><td>$594</td><td>$7,123</td><td>1.2%</td></tr>
+        <tr class="tbl-sub"><td>TRNEGCORP (Negotiated Corporate)</td><td>8</td><td>$438</td><td>$3,503</td><td>0.6%</td></tr>
+        <tr class="tbl-sub"><td>Method Co. / Internal (Comp/F&amp;F/Team)</td><td>~31</td><td>~$16</td><td>~$504</td><td>0.1%</td></tr>
+        <tr class="tbl-total"><td><strong>Grand Total (approx.)</strong></td><td><strong>1,203</strong></td><td><strong>$511</strong></td><td><strong>$614,526</strong></td><td><strong>100%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight-grid">
+    <div class="ic good">
+      <div class="ic-icon">🎯</div>
+      <div class="ic-head">Direct Mix Is Strong at ~54% of Revenue</div>
+      <div class="ic-body">Pay Now &amp; Save (34.8%) and Best Flexible Rate (19.4%) together account for approximately 54% of room revenue — a healthy direct mix for an independent boutique. The Pay Now rate at $594 ADR commands a premium over Expedia Collect at $422, validating the rate parity and direct booking incentive structure. <strong>Every incremental direct booking saves an estimated 15–18% OTA commission.</strong></div>
+    </div>
+    <div class="ic caution">
+      <div class="ic-icon">🌐</div>
+      <div class="ic-head">Expedia Leads OTA Mix — Monitor Commission Erosion</div>
+      <div class="ic-body">Expedia Collect (NREF Daily) at 158 room nights and $66,620 in revenue is the largest OTA channel, with an ADR of $422 — <strong>$172 below the direct rate</strong>. This rate gap, multiplied by volume, represents significant commission exposure. The OTA segment combined represents roughly 22% of revenue; maintaining this below 25% while growing direct should be an explicit target. Review OTA rate plan restrictions and minimum stay settings to prevent last-room-availability give-aways to OTAs at compressed rates.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     D. DIGITAL & MARKETING
+═══════════════════════════════════════════════════ -->
+<section class="section section-anchor" id="digital">
+  <div class="sec-eyebrow">D &nbsp;—&nbsp; Digital &amp; Marketing</div>
+  <div class="sec-title">Website Traffic &amp; Channel Performance — March 2026</div>
+
+  <div class="kpi-grid g5" style="margin-bottom:20px">
+    <div class="kpi">
+      <div class="kpi-lbl">Total Sessions</div>
+      <div class="kpi-val sm">19,400</div>
+      <div class="kpi-row"><span class="delta up">▲ New Launch</span></div>
+      <div class="kpi-note">vs 50 prior (platform launch)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Engagement Rate</div>
+      <div class="kpi-val sm">66.4%</div>
+      <div class="kpi-row"><span class="delta up">▲ +22.9%</span></div>
+      <div class="kpi-note">vs 54.0% prior</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Conversion Rate</div>
+      <div class="kpi-val sm">1.0%</div>
+      <div class="kpi-row"><span class="delta up">▲ New</span></div>
+      <div class="kpi-note">vs 0.0% (new platform)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Revenue / Session</div>
+      <div class="kpi-val sm">$14.58</div>
+      <div class="kpi-row"><span class="delta up">▲ Established</span></div>
+      <div class="kpi-note">Strong efficiency baseline</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Web-Attributed Revenue</div>
+      <div class="kpi-val sm">$282.9K</div>
+      <div class="kpi-row"><span class="delta up">▲ New</span></div>
+      <div class="kpi-note">Not equal to PMS room rev</div>
+    </div>
+  </div>
+
+  <!-- Traffic quality -->
+  <div class="kpi-grid g4" style="margin-bottom:24px">
+    <div class="kpi">
+      <div class="kpi-lbl">Traffic Quality Score</div>
+      <div class="kpi-val sm">39</div>
+      <div class="kpi-row"><span class="delta up">▲ +34.5%</span><span style="font-size:12px;color:var(--text-lt)">Prior: 29</span></div>
+      <div class="pill good">Improving</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Brand Intent Share</div>
+      <div class="kpi-val sm">71.0%</div>
+      <div class="kpi-row"><span class="delta down">▼ −11.7%</span><span style="font-size:12px;color:var(--text-lt)">Prior: 80.4%</span></div>
+      <div class="pill warn">Share Declining</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">High-Intent Organic</div>
+      <div class="kpi-val sm">16.2%</div>
+      <div class="kpi-row"><span class="delta up">▲ +38.1%</span><span style="font-size:12px;color:var(--text-lt)">Prior: 11.8%</span></div>
+      <div class="pill good">Growing</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Return Visitor Rate</div>
+      <div class="kpi-val sm">16.1%</div>
+      <div class="kpi-row"><span class="delta down">▼ −33.3%</span><span style="font-size:12px;color:var(--text-lt)">Prior: 24.1%</span></div>
+      <div class="pill warn">Rate Declining</div>
+    </div>
+  </div>
+
+  <!-- Organic SEO -->
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:14px">Google Organic Search Performance</h3>
+  <div class="kpi-grid g3" style="margin-bottom:20px">
+    <div class="kpi dark">
+      <div class="kpi-lbl">March Organic Impressions</div>
+      <div class="kpi-val sm">67,161</div>
+      <div class="kpi-row"><span class="delta up">▲ +31.8% MoM</span></div>
+      <div class="kpi-note">Growing every month since Oct 2025</div>
+    </div>
+    <div class="kpi dark">
+      <div class="kpi-lbl">Organic Clicks</div>
+      <div class="kpi-val sm">2,624</div>
+      <div class="kpi-row"><span class="delta up">▲ +20.0% MoM</span></div>
+      <div class="kpi-note">Clicks growing — positive signal</div>
+    </div>
+    <div class="kpi dark">
+      <div class="kpi-lbl">Organic CTR</div>
+      <div class="kpi-val sm">3.9%</div>
+      <div class="kpi-row"><span class="delta warn">Declining from Oct peak</span></div>
+      <div class="kpi-note">Oct 2025 CTR was ~13.5%</div>
+    </div>
+  </div>
+
+  <div class="insight-grid">
+    <div class="ic good">
+      <div class="ic-icon">🔍</div>
+      <div class="ic-head">Organic Is Growing Consistently</div>
+      <div class="ic-body">Google organic impressions have increased every single month since October 2025, reaching 67,161 in March — a clear sign that SEO investment is compounding. Clicks grew +20% month-over-month to 2,624. This organic growth trajectory is valuable: <strong>each organic click represents acquisition at effectively zero incremental cost</strong>, and the high-intent organic share of 16.2% (+38.1% MoM) signals improving search visibility for transactional queries.</div>
+    </div>
+    <div class="ic caution">
+      <div class="ic-icon">📉</div>
+      <div class="ic-head">CTR Compression Is Worth Monitoring</div>
+      <div class="ic-body">Organic CTR dropped from ~13.5% in October 2025 to 3.9% in March. This is partly explained by the mix shift: as impressions grow into broader, lower-intent queries, average CTR naturally dilutes. However, the gap is large enough to warrant a Google Search Console audit. <strong>If broad informational impressions are driving the volume without generating clicks, the SEO strategy should be reoriented toward higher-intent commercial queries</strong> (e.g., "book hotel charleston sc" rather than "things to do in charleston").</div>
+    </div>
+    <div class="ic good">
+      <div class="ic-icon">📧</div>
+      <div class="ic-head">Email Channel: Highest CVR in March</div>
+      <div class="ic-body">The Nickel Insider "Last Chance" promotion (sent March 22) delivered <strong>23 bookings and $30,141 in revenue at a 9.7% conversion rate</strong> — the highest CVR of any channel in March by a wide margin. At an average booking value of approximately $1,311, the email audience shows exceptionally high purchase intent. This validates the loyalty/CRM channel as a direct revenue lever and argues for increased investment in list growth and email frequency.</div>
+    </div>
+    <div class="ic alert">
+      <div class="ic-icon">🔄</div>
+      <div class="ic-head">Return Visitor Rate Decline Needs Attention</div>
+      <div class="ic-body">The return visitor rate fell from 24.1% to 16.1% (−33.3%). This signals that the audience mix is shifting toward new visitors — which can be healthy if those visitors are converting — but it also suggests <strong>the hotel's repeat guest engagement may be weakening</strong>. The 71% brand intent share (declining from 80.4%) reinforces this: fewer visitors are arriving with the property specifically in mind. Email retention and loyalty program investment are the most direct correctives.</div>
+    </div>
+  </div>
+
+  <!-- Metasearch -->
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin:28px 0 14px">Metasearch &amp; Google Hotel Finder</h3>
+  <div class="kpi-grid g3" style="margin-bottom:16px">
+    <div class="kpi">
+      <div class="kpi-lbl">Google Hotel Finder Revenue</div>
+      <div class="kpi-val sm">$13,008</div>
+      <div class="kpi-row"><span class="delta up">▲ +164.3% MoM</span></div>
+      <div class="kpi-note">288 calls · exceptional growth</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Google Free Booking Links</div>
+      <div class="kpi-val sm">$11,724</div>
+      <div class="kpi-row"><span class="delta up">▲ Zero Cost</span></div>
+      <div class="kpi-note">Effectively infinite ROAS</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Total Metasearch Revenue</div>
+      <div class="kpi-val sm">$16,316</div>
+      <div class="kpi-row"><span class="delta up">▲ ROAS 23.5x</span></div>
+      <div class="kpi-note">$695 spend (excl. $166 Promoted Hotels)</div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="callout-lbl">💡 Metasearch Opportunity</div>
+    <p>Metasearch generated <strong>$16,316 on $695 in spend — a 23.5x ROAS</strong>, the highest-efficiency paid channel in the portfolio. Google Free Booking Links alone contributed $11,724 at zero cost. Google Promoted Hotels spent $166 with no attributed revenue — a zero-ROAS allocation that should be restructured or paused. <strong>The opportunity here is to increase the Promoted Hotels bid strategy and budget given the channel's proven efficiency</strong>, while eliminating the underperforming configuration.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     E. PAID SEARCH ANALYSIS
+═══════════════════════════════════════════════════ -->
+<section class="section section-anchor" id="ppc">
+  <div class="sec-eyebrow">E &nbsp;—&nbsp; Paid Search (PPC)</div>
+  <div class="sec-title">Campaign Performance — March 2026</div>
+
+  <div class="kpi-grid g5" style="margin-bottom:20px">
+    <div class="kpi">
+      <div class="kpi-lbl">Overall ROAS</div>
+      <div class="kpi-val sm">6.83x</div>
+      <div class="kpi-row"><span class="delta down">▼ −56.9% MoM</span></div>
+      <div class="kpi-note">vs 15.8x prior month</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Total PPC Revenue</div>
+      <div class="kpi-val sm">$125.5K</div>
+      <div class="kpi-row"><span class="delta down">▼ −37.5% MoM</span></div>
+      <div class="kpi-note">vs $200.8K prior month</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Total PPC Spend</div>
+      <div class="kpi-val sm">$18,378</div>
+      <div class="kpi-row"><span class="delta warn">Brand: 70%</span></div>
+      <div class="kpi-note">$12,792 brand / $2,429 NB / $3,158 PMax</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">CTR</div>
+      <div class="kpi-val sm">2.4%</div>
+      <div class="kpi-row"><span class="delta up">▲ +26.4%</span></div>
+      <div class="kpi-note">vs 1.9% prior month</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Avg CPC</div>
+      <div class="kpi-val sm">$1.75</div>
+      <div class="kpi-row"><span class="delta down">▼ +45.2% vs prior</span></div>
+      <div class="kpi-note">vs $1.21 prior · CPC rising</div>
+    </div>
+  </div>
+
+  <!-- Benchmark Context -->
+  <div class="callout">
+    <div class="callout-lbl">Benchmark Context — Property-Appropriate Standards</div>
+    <p>The platform-generated benchmarks shown in the vendor dashboard (Brand Spend ≤18%, New Guest Revenue ≥70%, PPC Vendor Grade F) are <strong>generic defaults not calibrated for The Nickel's profile</strong>. For an independent boutique in Charleston with ~$511 ADR and &lt;100 rooms in a leisure-dominant market, appropriate benchmarks are: <strong>Brand Spend: 25–40%</strong> (OTAs actively bid on the name); <strong>Non-Brand ROAS: 4–8×</strong>; <strong>Brand ROAS: 5–10×</strong>; <strong>Quality Score (non-brand): 7–9</strong>. PPC as % of PMS room revenue: approximately 3.0% ($18,378 / $614,530 = 3.0%). This assessment applies those property-appropriate standards.</p>
+  </div>
+
+  <!-- Campaign Table -->
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Campaign</th><th>Impressions</th><th>Clicks</th><th>Avg CPC</th><th>Cost</th><th>Spend %</th><th>ROAS</th><th>Revenue</th><th>QS</th><th>Verdict</th>
+      </tr></thead>
+      <tbody>
+        <tr class="tbl-group"><td colspan="10">Brand Campaign (69.6% of budget)</td></tr>
+        <tr>
+          <td><strong>Brand — Total</strong></td><td>18,466</td><td>4,451</td><td>$2.87</td><td>$12,792</td><td class="dn"><strong>69.6%</strong></td>
+          <td>7.08x</td><td>$90,566</td><td><span class="qs go">7</span></td>
+          <td class="dn">Over-weighted</td>
+        </tr>
+        <tr class="tbl-sub">
+          <td>↳ The Nickel (Broad)</td><td>14,082</td><td>3,277</td><td>$3.05</td><td>$9,987</td><td>54.3%</td>
+          <td>7.41x</td><td>$73,959</td><td><span class="qs go">7</span></td>
+          <td class="wn">Core term</td>
+        </tr>
+        <tr class="tbl-sub">
+          <td>↳ The Nickel Hotel (Broad)</td><td>3,051</td><td>799</td><td>$2.23</td><td>$1,780</td><td>9.7%</td>
+          <td>5.79x</td><td>$10,305</td><td><span class="qs go">10</span></td>
+          <td class="up">Efficient</td>
+        </tr>
+        <tr class="tbl-sub">
+          <td>↳ The Nickel Charleston (Broad)</td><td>1,333</td><td>375</td><td>$2.73</td><td>$1,025</td><td>5.6%</td>
+          <td>6.15x</td><td>$6,302</td><td><span class="qs go">10</span></td>
+          <td class="up">Efficient</td>
+        </tr>
+        <tr class="tbl-group"><td colspan="10">Non-Brand Campaign (13.2% of budget)</td></tr>
+        <tr>
+          <td><strong>Non-Brand — Total</strong></td><td>14,217</td><td>781</td><td>$3.11</td><td>$2,429</td><td class="dn"><strong>13.2%</strong></td>
+          <td>5.05x</td><td>$12,273</td><td>—</td>
+          <td class="dn">Under-funded</td>
+        </tr>
+        <tr class="tbl-sub">
+          <td>↳ General ("hotels in charleston sc")</td><td>5,674</td><td>325</td><td>$3.29</td><td>$1,071</td><td>5.8%</td>
+          <td><strong>9.24x</strong></td><td>$9,891</td><td><span class="qs o">5</span></td>
+          <td class="up">Highest NB ROAS</td>
+        </tr>
+        <tr class="tbl-sub">
+          <td>↳ Best ("best hotels in charleston sc")</td><td>3,125</td><td>141</td><td>$2.95</td><td>$415</td><td>2.3%</td>
+          <td>1.25x</td><td>$519</td><td><span class="qs o">4</span></td>
+          <td class="dn">Low QS / Low ROAS</td>
+        </tr>
+        <tr class="tbl-sub">
+          <td>↳ Boutique ("charleston boutique hotels")</td><td>1,650</td><td>132</td><td>$2.97</td><td>$392</td><td>2.1%</td>
+          <td>0.00x</td><td>$0</td><td>—</td>
+          <td class="dn">Zero Revenue</td>
+        </tr>
+        <tr class="tbl-sub">
+          <td>↳ Downtown ("hotels downtown charleston sc")</td><td>729</td><td>30</td><td>$3.05</td><td>$91</td><td>0.5%</td>
+          <td>0.00x</td><td>$0</td><td>—</td>
+          <td class="dn">Zero Revenue</td>
+        </tr>
+        <tr class="tbl-sub">
+          <td>↳ King Street ("hotels on king street")</td><td>2,170</td><td>123</td><td>$3.01</td><td>$370</td><td>2.0%</td>
+          <td>0.00x</td><td>$0</td><td>—</td>
+          <td class="dn">Zero Revenue</td>
+        </tr>
+        <tr class="tbl-group"><td colspan="10">Performance Max (17.2% of budget)</td></tr>
+        <tr>
+          <td><strong>Performance Max 20</strong></td><td>397,652</td><td>5,242</td><td>$0.60</td><td>$3,158</td><td>17.2%</td>
+          <td>7.18x</td><td>$22,669</td><td>—</td>
+          <td class="up">Efficient CPM</td>
+        </tr>
+        <tr class="tbl-total">
+          <td><strong>Grand Total</strong></td><td>430,335</td><td>10,474</td><td>$1.75</td><td>$18,378</td><td>100%</td>
+          <td>6.83x</td><td>$125,508</td><td>—</td><td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Critical Analysis -->
+  <div class="insight-grid">
+    <div class="ic alert">
+      <div class="ic-icon">⚠️</div>
+      <div class="ic-head">Brand IS Not Budget-Constrained — Key Finding</div>
+      <div class="ic-body">The vendor email states brand impression share loss is driven <strong>27% by rank, only 12% by budget</strong>. This is a critical data point that vendor dashboards often omit: the brand campaign is <strong>not meaningfully budget-constrained</strong> — IS% Lost to Budget is only 12%. This means reducing brand spend by 10–15% would not materially harm brand impression share. Every dollar redirected from brand to non-brand or Performance Max is a net reallocation gain.</div>
+    </div>
+    <div class="ic alert">
+      <div class="ic-icon">🚨</div>
+      <div class="ic-head">Three Non-Brand Campaigns: Zero Revenue</div>
+      <div class="ic-body">Boutique, Downtown, and King Street campaigns generated <strong>combined spend of $853 with $0 in attributed revenue</strong>. The most likely causes are: (1) tracking pixel failure on landing pages, (2) landing page mismatch driving high bounce rates, or (3) keyword match type issues pulling irrelevant traffic. These should be paused immediately pending investigation. The budget could be redirected to "General" (9.24x ROAS) or Performance Max.</div>
+    </div>
+    <div class="ic good">
+      <div class="ic-icon">💡</div>
+      <div class="ic-head">"General" Non-Brand Campaign: Best ROAS in Portfolio</div>
+      <div class="ic-body">The General non-brand campaign ("hotels in charleston sc") generated <strong>9.24x ROAS on $1,071 spend</strong> — the highest non-brand ROAS in the account. This campaign is severely underfunded at only 5.8% of total PPC budget while delivering outsized returns. Every additional $1,000 redirected here at current efficiency would generate ~$9,240 in revenue. The QS of 5 on some keywords is a drag — quality score work here could further improve CPCs and auction eligibility.</div>
+    </div>
+    <div class="ic caution">
+      <div class="ic-icon">📊</div>
+      <div class="ic-head">Brand ROAS Is Partly Capturing Organic Intent</div>
+      <div class="ic-body">Brand campaigns show 7.08x ROAS, but this figure includes a significant proportion of searchers who would have found and booked the hotel organically. <strong>The "incremental" contribution of brand spend is materially lower than the reported ROAS suggests</strong>. With brand organic CTR at 3.9% and growing, and brand IS Lost to Budget at only 12%, the economic case for maintaining $12,792/month in brand spend deserves rigorous scrutiny in the next vendor review.</div>
+    </div>
+  </div>
+
+  <!-- Budget Reallocation -->
+  <div class="dark-box" style="margin-top:20px">
+    <div class="db-title">Illustrative Budget Reallocation Model</div>
+    <p>Current allocation directs 69.6% of budget to brand campaigns. The following reallocation model maintains essential brand coverage while significantly expanding non-brand reach. Estimated revenue impact is modeled on current observed ROAS by campaign type.</p>
+    <div class="tbl-wrap" style="margin-top:16px">
+      <table class="realloc-tbl" style="background:rgba(255,255,255,0.05)">
+        <thead><tr>
+          <th style="text-align:left">Campaign</th><th>Current $</th><th>Current %</th><th>Proposed $</th><th>Proposed %</th><th>Est. Revenue Impact</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Brand (Core Terms)</td><td>$12,792</td><td>69.6%</td><td>$6,500</td><td>35.4%</td><td class="dn">−$46K (brand organic captures ~60%)</td></tr>
+          <tr><td>Non-Brand General</td><td>$1,071</td><td>5.8%</td><td>$4,500</td><td>24.5%</td><td class="pos">+$31.6K @ 9.24x ROAS</td></tr>
+          <tr><td>Performance Max</td><td>$3,158</td><td>17.2%</td><td>$5,000</td><td>27.2%</td><td class="pos">+$13K @ 7.18x ROAS</td></tr>
+          <tr><td>Transient / Non-Brand (other)</td><td>$1,358</td><td>7.4%</td><td>$2,000</td><td>10.9%</td><td class="pos">+$4.8K</td></tr>
+          <tr><td>Boutique / Downtown / King St.</td><td>$853</td><td>4.6%</td><td>$0</td><td>0%</td><td class="dn">Pause until tracking fixed</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>$18,378</strong></td><td><strong>100%</strong></td><td><strong>$18,000</strong></td><td><strong>100%</strong></td><td class="pos"><strong>Net: +~$3.4K estimated gain</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.45)">Note: Revenue impact estimates assume current observed ROAS by campaign type hold at new spend levels. Brand ROAS discount applied at 40% to reflect organic cannibalization. Results should be validated over 60–90 days with proper incrementality tracking.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     F. VENDOR ASSESSMENT
+═══════════════════════════════════════════════════ -->
+<section class="section section-anchor" id="vendor">
+  <div class="sec-eyebrow">F &nbsp;—&nbsp; Vendor Assessment</div>
+  <div class="sec-title">Independent Read — March Marketing Report</div>
+
+  <p class="prose" style="margin-bottom:24px">The following is a claim-by-claim assessment of the vendor's March performance email against the available data. This analysis is not about finding fault — vendors structure reports to highlight what they control and are incentivized to retain accounts. The goal is to give the ownership team an independent read so their vendor conversations are more productive and data-specific.</p>
+
+  <div class="vendor-claim">
+    <div class="vc-head">
+      <div class="vc-verdict partial">~ Partial</div>
+      <div class="vc-claim">"March closed at $320,158, essentially flat with February (+0.2%)"</div>
+    </div>
+    <div class="vc-body">
+      <p><strong>What they said:</strong> Total revenue of $320,158, essentially unchanged from February, with bookings down 16.9% offset by ADR growth of 28.8% to $581.</p>
+      <p><strong>What the data shows:</strong> The $320,158 figure is <em>booking-engine-attributed web revenue</em> — a fundamentally different number from the PMS room revenue of <strong>$614,530</strong>. The vendor is reporting only the slice of revenue their platform tracks, not the hotel's actual operational performance. Both numbers are real, but conflating them — or presenting one without explicitly distinguishing it from the other — creates confusion about how the hotel is actually performing.</p>
+      <p><strong>What's missing:</strong> The vendor should clearly label this figure as "booking-engine attributed revenue" and note that it does not include all reservations flowing through channels outside their tracking scope. The ADR figure of $581 in the vendor report vs. $513 in the STR data ($511 in the PMS) also reflects a measurement difference — the vendor is measuring ADR of bookings made in March (by purchase date), while the STR measures ADR of stays in March.</p>
+    </div>
+  </div>
+
+  <div class="vendor-claim">
+    <div class="vc-head">
+      <div class="vc-verdict accurate">✓ Accurate</div>
+      <div class="vc-claim">"The Nickel Insider email delivered 23 bookings and $30,141 in revenue at a 9.7% CVR"</div>
+    </div>
+    <div class="vc-body">
+      <p><strong>What they said:</strong> The Last Chance promotion sent March 22 was the highest-converting channel in March at 9.7% CVR, generating $30,141 in revenue from 23 bookings.</p>
+      <p><strong>What the data shows:</strong> This checks out and is genuinely strong. At approximately $1,311 per booking, the email audience is booking high-value stays. A 9.7% CVR from a promotional email to a loyalty list is excellent — 3–5% is considered strong in hospitality email marketing. This result validates the CRM investment and argues for expanding the program.</p>
+      <p><strong>What to watch:</strong> The vendor should be asked to report on list size, list growth rate, unsubscribe rate, and the percentage of email bookers who are new-to-file versus existing guests. If the list is small and stagnating, the high CVR will eventually produce diminishing returns.</p>
+    </div>
+  </div>
+
+  <div class="vendor-claim">
+    <div class="vc-head">
+      <div class="vc-verdict partial">~ Partial</div>
+      <div class="vc-claim">"Brand IS loss is driven by rank (27%), not budget (12%)"</div>
+    </div>
+    <div class="vc-body">
+      <p><strong>What they said:</strong> Brand campaign impression share declined 12.5 points month-over-month to 61%. IS loss is split 27% rank-driven, 12% budget-driven. The core term "The Nickel" captures 56% impression share.</p>
+      <p><strong>What the data shows:</strong> The IS Lost to Budget figure of 12% is technically accurate and the vendor correctly identifies rank as the primary drag. However, the framing is incomplete. <strong>IS Lost to Budget at 12% means the brand campaign is only mildly budget-constrained</strong> — and therefore reducing brand spend by 15–20% would not meaningfully reduce impression share. The vendor has chosen to report this as "not a budget problem" without drawing the logical conclusion: <em>there is surplus brand budget that could be profitably reallocated.</em></p>
+      <p><strong>What's missing:</strong> The fact that IS is lost primarily to rank means the quality score improvement on brand terms (not more budget) is the right solution. The vendor should be asked specifically what actions they are taking to improve the Quality Score on brand terms from the current 7 to 9+.</p>
+    </div>
+  </div>
+
+  <div class="vendor-claim">
+    <div class="vc-head">
+      <div class="vc-verdict partial">~ Partial</div>
+      <div class="vc-claim">"Performance Max and Transient combined delivered $34,941 in revenue on $5,587 in spend"</div>
+    </div>
+    <div class="vc-body">
+      <p><strong>What they said:</strong> PMax + Transient campaigns generated $34,941 on $5,587 spend — a blended ROAS of approximately 6.3x.</p>
+      <p><strong>What the data shows:</strong> The PMS campaign data shows Performance Max at $22,669 revenue on $3,158 spend (7.18x) and Non-Brand Transient at $12,273 on $2,429 (5.05x). The blended figure holds up. However, <strong>the vendor is presenting the blended number in a way that obscures the significant variance between campaigns</strong>. Multiple non-brand keyword groups (Boutique, Downtown, King Street) generated $0 in revenue on $853 in combined spend — a $853 write-off hidden within the blended "Transient" figure.</p>
+    </div>
+  </div>
+
+  <div class="vendor-claim">
+    <div class="vc-head">
+      <div class="vc-verdict accurate">✓ Accurate</div>
+      <div class="vc-claim">"Google Hotel Finder generated 288 calls and $13,008 in revenue, up 164.3% MoM"</div>
+    </div>
+    <div class="vc-body">
+      <p><strong>What they said:</strong> Google Hotel Finder / metasearch generated $13,008 in revenue on minimal spend, with 288 calls, up dramatically month-over-month. Google Free Booking Links contributed $11,724 at zero cost.</p>
+      <p><strong>What the data shows:</strong> This claim is accurate and represents genuinely strong performance. Metasearch ROAS of 23.5x ($16,316 / $695) is the highest-efficiency paid channel in the portfolio. The vendor correctly highlights this as a win. <strong>The key follow-up is whether they are actively optimizing the Promoted Hotels campaign</strong> — $166 was spent with no attributed revenue, suggesting the bidding configuration needs adjustment.</p>
+    </div>
+  </div>
+
+  <div class="vendor-claim">
+    <div class="vc-head">
+      <div class="vc-verdict watch">◎ Watch</div>
+      <div class="vc-claim">"January and February were the two strongest brand revenue months since launch at $128,593 and $134,563"</div>
+    </div>
+    <div class="vc-body">
+      <p><strong>What they said:</strong> Brand campaign revenue peaked in Jan–Feb; March declined significantly.</p>
+      <p><strong>What the data shows:</strong> Brand PPC revenue fell from ~$134K (Feb) to $90,566 (March) — a $44K decline month-over-month. The vendor presents Jan–Feb as peaks without explaining what drove the March decline. <strong>If brand demand is seasonal, declining brand PPC revenue is expected and not a failure</strong>. If it reflects reduced impression share or conversion rate issues, that requires a different response. The vendor should be asked to attribute the March revenue decline specifically between (a) fewer brand searches, (b) lower impression share, and (c) lower conversion rate.</p>
+    </div>
+  </div>
+
+  <!-- Vendor Questions -->
+  <div class="dark-box" style="margin-top:24px">
+    <div class="db-title">Questions to Ask in Your Next Vendor Review</div>
+    <ul class="db-list">
+      <li>
+        <span class="num">1</span>
+        <div><strong style="color:var(--gold-lt)">⭐ Should answer immediately:</strong> "Brand IS% Lost to Budget is 12%. Can you show me specifically what would happen to brand impression share if we reduced brand spend by 20%? And where would you reallocate that budget?" A vendor who can't answer this question with data is not managing the account proactively.</div>
+      </li>
+      <li>
+        <span class="num">2</span>
+        <div><strong style="color:var(--gold-lt)">⭐ Should answer immediately:</strong> "The Boutique, Downtown, and King Street keyword groups generated $853 in spend and $0 in revenue last month. What is the specific root cause — tracking failure, landing page, or keyword match type — and what is your plan to fix or pause these?" A vague answer about 'brand awareness' is not acceptable for bottom-funnel search campaigns.</div>
+      </li>
+      <li>
+        <span class="num">3</span>
+        <div><strong style="color:var(--gold-lt)">⭐ Should answer immediately:</strong> "The General non-brand campaign ('hotels in charleston sc') shows 9.24x ROAS on $1,071 spend. Why is this campaign receiving less than 6% of total budget when it has the highest non-brand ROAS in the account?"</div>
+      </li>
+      <li>
+        <span class="num">4</span>
+        <div>"Your report states Total Revenue of $320,158. Can you provide a reconciliation that shows exactly how this figure relates to the PMS room revenue? Which reservations in the PMS are included and which are not captured by your tracking?"</div>
+      </li>
+      <li>
+        <span class="num">5</span>
+        <div>"What is the Quality Score breakdown on non-brand keywords specifically — excluding brand terms? And what specific actions are you taking this month to improve non-brand QS from its current levels?"</div>
+      </li>
+      <li>
+        <span class="num">6</span>
+        <div>"The Nickel Insider email produced a 9.7% CVR. What is the current list size, monthly growth rate, and unsubscribe rate? What is your plan to grow the list, and what frequency cadence do you recommend for the next 90 days?"</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     G. STRATEGIC PRIORITIES
+═══════════════════════════════════════════════════ -->
+<section class="section section-anchor" id="priorities">
+  <div class="sec-eyebrow">G &nbsp;—&nbsp; Strategic Priorities</div>
+  <div class="sec-title">Prioritized Action Items — April 2026</div>
+
+  <div class="priority-item">
+    <div class="p-num">1</div>
+    <div>
+      <div class="p-head">Pause Zero-Revenue Non-Brand Campaigns and Redirect Budget to General &amp; Performance Max</div>
+      <div class="p-body">Boutique, Downtown, and King Street keyword groups spent $853 in March and generated zero attributed revenue. These campaigns should be paused immediately pending a full investigation: verify tracking pixel health on landing pages, confirm keyword match type alignment with landing page content, and audit for attribution breaks. The $853 recovered, plus 15–20% of brand budget ($1,920–$2,558), should be reallocated to the General non-brand campaign and Performance Max — the two highest-ROAS non-brand channels in the account. This reallocation can be executed in the current billing cycle with no additional spend.</div>
+    </div>
+    <div class="p-class critical">Critical</div>
+  </div>
+
+  <div class="priority-item">
+    <div class="p-num">2</div>
+    <div>
+      <div class="p-head">Commission a Formal Midweek Demand Strategy for Sunday–Wednesday</div>
+      <div class="p-body">Monday through Wednesday represents 32.4% of room revenue at an average ADR of $418 — $279 below the weekend rate. Wednesday has the lowest volume in the house (151 nights). This is the clearest revenue growth opportunity available without adding supply. The strategy should target three tracks simultaneously: (1) corporate account prospecting for Charleston companies with recurring travel needs, (2) leisure package development anchored to midweek cultural or culinary programming, and (3) minimum stay removal on Sunday nights to capture leisure extension stays from Saturday arrivals. Even a 10-room-night increase per weeknight at $400 ADR represents $720K in incremental annual revenue at current performance levels.</div>
+    </div>
+    <div class="p-class critical">Critical</div>
+  </div>
+
+  <div class="priority-item">
+    <div class="p-num">3</div>
+    <div>
+      <div class="p-head">Rebalance PPC Budget Toward 35% Brand / 65% Non-Brand + PMax Allocation</div>
+      <div class="p-body">The current 70/30 brand-dominant structure is the primary reason new-guest revenue represents only 10% of PPC revenue. For a property of The Nickel's profile (independent boutique, $511 ADR, leisure market), a 35% brand allocation is within the upper range of appropriate benchmarks and still provides competitive auction coverage for branded queries — particularly since IS Lost to Budget is only 12%. The rebalanced structure should direct incremental budget to the General non-brand group (currently 9.24x ROAS, severely underfunded) and expand Performance Max audiences. Implement incrementality measurement via Google's Conversion Lift experiment within 60 days to validate the true contribution of brand spend.</div>
+    </div>
+    <div class="p-class critical">Critical</div>
+  </div>
+
+  <div class="priority-item">
+    <div class="p-num">4</div>
+    <div>
+      <div class="p-head">Accelerate Email List Growth and Increase the Nickel Insider Send Frequency</div>
+      <div class="p-body">The Insider "Last Chance" promotion proved the email channel can deliver a 9.7% CVR — the highest of any channel in March. At $1,311 average booking value, even a modest list of 1,000 engaged subscribers could generate $50K+ per targeted send. The immediate priority is to audit the current list size and growth trajectory, implement on-property list capture (QR codes at check-in, F&amp;B touch points, departure email opt-in), and develop a 12-month editorial calendar with a minimum of one promotional email and one informational email per month. Ask the vendor for a list health report showing open rates, click rates, and subscriber growth since launch.</div>
+    </div>
+    <div class="p-class important">Important</div>
+  </div>
+
+  <div class="priority-item">
+    <div class="p-num">5</div>
+    <div>
+      <div class="p-head">Increase Metasearch Investment and Fix Google Promoted Hotels Configuration</div>
+      <div class="p-body">Metasearch generated $16,316 on $695 in spend — a 23.5x ROAS that is the highest-efficiency paid channel in the portfolio. Google Free Booking Links ($11,724 at zero cost) should be monitored for listing completeness and rate parity issues. Google Promoted Hotels spent $166 with no attributed revenue — this bid configuration is broken and should be restructured or paused. The vendor should provide a specific recommendation for Promoted Hotels bid strategy (target CPC vs. ROAS bidding) and the rationale for any budget increase above $1,000/month in metasearch, which would likely remain the most capital-efficient paid channel available.</div>
+    </div>
+    <div class="p-class important">Important</div>
+  </div>
+
+  <div class="priority-item">
+    <div class="p-num">6</div>
+    <div>
+      <div class="p-head">Commission a Google Search Console Audit to Diagnose Organic CTR Compression</div>
+      <div class="p-body">Organic impressions grew +31.8% to 67,161 in March — a genuinely encouraging trend. However, CTR compressed from ~13.5% (October 2025) to 3.9%, suggesting the impression growth is being driven by informational or broad-match queries with low transactional intent. A Search Console audit should isolate (a) which queries are driving the new impression volume, (b) which queries are converting to clicks, and (c) whether any high-volume queries represent opportunities for targeted content pages. The goal is to shift the organic mix toward queries with demonstrable booking intent — not just impression scale.</div>
+    </div>
+    <div class="p-class important">Important</div>
+  </div>
+
+  <div class="priority-item">
+    <div class="p-num">7</div>
+    <div>
+      <div class="p-head">Implement a Formal Revenue Reporting Framework That Separates PMS and Web Attribution</div>
+      <div class="p-body">The current reporting structure conflates booking-engine-attributed revenue ($320,158) with total PMS room revenue ($614,530). These measure fundamentally different things, and using either in isolation will produce incomplete decisions. The ownership team should establish a single monthly reporting template that shows: (1) PMS total room revenue as the primary performance KPI, (2) web-attributed revenue as a channel-level digital marketing KPI, and (3) a reconciliation note explaining the difference. This prevents misinterpretation in leadership reviews and ensures the vendor is held accountable for the right metric (web channel performance, not total hotel performance).</div>
+    </div>
+    <div class="p-class strategic">Strategic</div>
+  </div>
+
+  <div class="priority-item">
+    <div class="p-num">8</div>
+    <div>
+      <div class="p-head">Request a Custom STR Competitor Report to Diagnose the Occupancy Fair Share Gap</div>
+      <div class="p-body">The Nickel's 12.3-point occupancy gap vs. the competitive set is the single largest RevPAR Index drag. Without knowing which specific competitors are driving the 89.3% comp set average, it is impossible to determine whether the gap is structural (property type, location, amenity set), distributional (OTA presence, metasearch visibility), or pricing-related (rate compression on shoulder dates). A custom STR report showing individual competitor metrics would clarify whether the gap is concentrated in specific night types (midweek vs. weekend), specific price tiers, or specific booking channels. This data should inform a targeted distribution expansion plan.</div>
+    </div>
+    <div class="p-class strategic">Strategic</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong>The Nickel</strong> &nbsp;·&nbsp; March 2026 Monthly Performance Report &nbsp;·&nbsp; Confidential · For Internal Use Only<br>
+  <span style="margin-top:8px;display:block">Data Sources: STR Report (Last Month), PMS Segment &amp; Room Type Drilldown, Campaign Type Performance Dashboard, Paid Search KPI Dashboard, Website Traffic Analytics, Google Organic Impressions Report, Marketing Vendor Monthly Email Summary</span>
+</footer>
+
+</body>
+</html>
